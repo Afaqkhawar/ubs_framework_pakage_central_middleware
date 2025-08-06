@@ -1,0 +1,7 @@
+node_modules
+src/**/*.test.js
+example/
+build/
+.vscode/
+.env
+README.md

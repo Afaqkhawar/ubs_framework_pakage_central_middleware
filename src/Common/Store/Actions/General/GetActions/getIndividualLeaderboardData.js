@@ -5,6 +5,7 @@ export const getIndividualLeaderboardData = (
   onSuccess,
   onFailure
 ) => {
+  console.log("class_activity_id", class_activity_id);
   return {
     type: GET_INDIVIDUAL_LEADERBOARD_DATA,
     payload: {

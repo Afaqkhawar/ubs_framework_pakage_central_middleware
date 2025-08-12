@@ -21,12 +21,15 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-var __commonJS = (cb, mod) => function __require() {
+var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
+  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
+}) : x)(function(x) {
+  if (typeof require !== "undefined")
+    return require.apply(this, arguments);
+  throw Error('Dynamic require of "' + x + '" is not supported');
+});
+var __commonJS = (cb, mod) => function __require2() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-};
-var __export = (target, all2) => {
-  for (var name in all2)
-    __defProp(target, name, { get: all2[name], enumerable: true });
 };
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
@@ -44,12 +47,11 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // src/Common/Store/Sagas/encryption.js
 var require_encryption = __commonJS({
-  "src/Common/Store/Sagas/encryption.js"(exports, module2) {
-    var CryptoJS = require("crypto-js");
+  "src/Common/Store/Sagas/encryption.js"(exports, module) {
+    var CryptoJS = __require("crypto-js");
     var adjustKeyLength = (key, targetLength = 32) => {
       if (key.length > targetLength) {
         return key.slice(0, targetLength);
@@ -79,29 +81,18 @@ var require_encryption = __commonJS({
       const decryptedObject = JSON.parse(decryptedString);
       return decryptedObject;
     };
-    module2.exports = { encryptObject: encryptObject2, decryptObject: decryptObject2 };
+    module.exports = { encryptObject: encryptObject2, decryptObject: decryptObject2 };
   }
 });
 
-// index.js
-var central_middleware_exports = {};
-__export(central_middleware_exports, {
-  getServerResponse: () => getServerResponse,
-  serverCommunicationHelper: () => serverCommunicationHelper,
-  showErrorToast: () => showErrorToast,
-  showInfoToast: () => showInfoToast,
-  showSuccessToast: () => showSuccessToast
-});
-module.exports = __toCommonJS(central_middleware_exports);
-
 // src/Common/Store/configureStore.js
-var import_redux2 = require("redux");
-var import_redux_persist = require("redux-persist");
-var import_storage = __toESM(require("redux-persist/lib/storage"));
-var import_redux_saga = __toESM(require("redux-saga"));
+import { applyMiddleware, createStore, compose } from "redux";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import createSagaMiddleware from "redux-saga";
 
 // src/Common/Store/Reducers/index.js
-var import_redux = require("redux");
+import { combineReducers } from "redux";
 
 // src/Common/Store/Actions/ActionTypes/ReduxActionTypes.js
 var REDUX_UPDATE_CURRENT_USER_ROLE = "REDUX_UPDATE_CURRENT_USER_ROLE";
@@ -175,13 +166,13 @@ var mainReducer = (state = initialState, action) => {
 var mainReducer_default = mainReducer;
 
 // src/Common/Store/Reducers/index.js
-var rootReducer = (0, import_redux.combineReducers)({
+var rootReducer = combineReducers({
   main: mainReducer_default
 });
 var Reducers_default = rootReducer;
 
 // src/Common/Store/Sagas/rootSaga.js
-var import_effects4 = require("redux-saga/effects");
+import { all } from "redux-saga/effects";
 
 // src/Common/Store/Actions/ActionTypes/ApiActionTypes.js
 var GET_OTP = "GET_OTP";
@@ -223,11 +214,11 @@ var FETCH_CLASS_ACTIVITIES = "FETCH_CLASS_ACTIVITIES";
 var API_DOCUMENTATION = "API_DOCUMENTATION";
 
 // src/Common/Store/Sagas/general/generalSagas.js
-var import_effects3 = require("redux-saga/effects");
+import { takeEvery } from "redux-saga/effects";
 
 // src/Common/Store/Sagas/SagaHelper.js
-var import_effects = require("redux-saga/effects");
 var import_encryption = __toESM(require_encryption());
+import { select, put } from "redux-saga/effects";
 
 // src/Common/Constants.js
 var constants = {
@@ -329,7 +320,7 @@ function* fetchData(action, queryParameter, queryParameterId) {
   const updated_action = (action == null ? void 0 : action.payload) || action;
   try {
     console.log("ENV CHECK", process.env);
-    const all_state = yield (0, import_effects.select)((state) => state.main);
+    const all_state = yield select((state) => state.main);
     if (!((_a = process.env) == null ? void 0 : _a.REACT_APP_PLATFORM_KEY) || !((_b = process.env) == null ? void 0 : _b.REACT_APP_SECRET_KEY)) {
       console.log("Encryption Failed");
       updated_action == null ? void 0 : updated_action.onFailure({
@@ -339,7 +330,7 @@ function* fetchData(action, queryParameter, queryParameterId) {
       });
       return;
     }
-    const currentUser = yield (0, import_effects.select)((state) => state);
+    const currentUser = yield select((state) => state);
     const { userSelectedRole } = currentUser.main;
     console.log("currentUser", currentUser, userSelectedRole);
     const nextPart = updated_action == null ? void 0 : updated_action.apiUrl;
@@ -508,7 +499,7 @@ function* fetchData(action, queryParameter, queryParameterId) {
           responseData = !isFile ? responseData == null ? void 0 : responseData.payload : response;
         }
         if (updated_action == null ? void 0 : updated_action.reduxActionType) {
-          yield (0, import_effects.put)({
+          yield put({
             type: updated_action == null ? void 0 : updated_action.reduxActionType,
             payload: responseData,
             requestParams: updated_action == null ? void 0 : updated_action.body
@@ -567,61 +558,61 @@ var getFrameworkErrorMessage = (statusCode, frameworkStatusCode) => {
 var SagaHelper_default = fetchData;
 
 // src/Common/Store/Sagas/ReduxOnlySagaHelper.js
-var import_effects2 = require("redux-saga/effects");
+import { put as put2 } from "redux-saga/effects";
 function* fetchData2(action) {
-  yield (0, import_effects2.put)({ type: action.payload.reduxActionType, payload: action.payload.data });
+  yield put2({ type: action.payload.reduxActionType, payload: action.payload.data });
 }
 var ReduxOnlySagaHelper_default = fetchData2;
 
 // src/Common/Store/Sagas/general/generalSagas.js
 function* dataSaga() {
-  yield (0, import_effects3.takeEvery)(GET_OTP, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(VERIFY_OTP, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(GET_ALL_USERS, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(GET_ALL_ROLES, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(DELETE_USER, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADD_USER, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(DELETE_ROLE, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADD_ROLE, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(GET_GROUPS, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(GET_ALL_PERMISSIONS, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(GET_ALL_PERMISSIONS_GROUPS, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(UPDATE_USER_DATA, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(GET_ALL_USER_ROLE_PERMISSIONS_GROUPS, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(GET_ADMIN_DASHBOARD_DATA, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(GET_USER_DEVICES, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADD_PERMISSION, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(PERMISSION_UPDATE, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(GET_PERMISSION_BY_ID, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(UPDATE_PERMISSION_BY_ID, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADMIN_USER_VIEW, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADMIN_DESIGNATION_VIEW, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADMIN_DEPARTMENTS_VIEW, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADMIN_ROLES_DESIGNATION_DEPARTMENT_VIEW, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADMIN_USER_ROLE_DESIGNATION_DEPARTMENT_VIEW, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADMIN_PERMISSION_GROUPS_VIEW, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADMIN_PERMISSION_GROUPS_PERMISSIONS_VIEW, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADMIN_USER_ROLE_DESIGNATION_PERMISSIONS_VIEW, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADMIN_USER_VIEW, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)("admin_user_update", SagaHelper_default);
-  yield (0, import_effects3.takeEvery)("admin_urdd_list", SagaHelper_default);
-  yield (0, import_effects3.takeEvery)("admin_urdd_add", SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(UPDATE_CURRENT_USER_ROLE, ReduxOnlySagaHelper_default);
-  yield (0, import_effects3.takeEvery)(UPDATE_LOADING_STATE, ReduxOnlySagaHelper_default);
-  yield (0, import_effects3.takeEvery)(LOGOUT_CURRENT_USER, ReduxOnlySagaHelper_default);
-  yield (0, import_effects3.takeEvery)(API_DOCUMENTATION, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(GET_INDIVIDUAL_LEADERBOARD_DATA, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(GET_GROUP_LEADERBOARD_DATA, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(GET_USER_DEVICES_OTP, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADD_DEVICE, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(ADD_DEVICE_OTP, SagaHelper_default);
-  yield (0, import_effects3.takeEvery)(FETCH_CLASS_ACTIVITIES, SagaHelper_default);
+  yield takeEvery(GET_OTP, SagaHelper_default);
+  yield takeEvery(VERIFY_OTP, SagaHelper_default);
+  yield takeEvery(GET_ALL_USERS, SagaHelper_default);
+  yield takeEvery(GET_ALL_ROLES, SagaHelper_default);
+  yield takeEvery(DELETE_USER, SagaHelper_default);
+  yield takeEvery(ADD_USER, SagaHelper_default);
+  yield takeEvery(DELETE_ROLE, SagaHelper_default);
+  yield takeEvery(ADD_ROLE, SagaHelper_default);
+  yield takeEvery(GET_GROUPS, SagaHelper_default);
+  yield takeEvery(GET_ALL_PERMISSIONS, SagaHelper_default);
+  yield takeEvery(GET_ALL_PERMISSIONS_GROUPS, SagaHelper_default);
+  yield takeEvery(UPDATE_USER_DATA, SagaHelper_default);
+  yield takeEvery(GET_ALL_USER_ROLE_PERMISSIONS_GROUPS, SagaHelper_default);
+  yield takeEvery(GET_ADMIN_DASHBOARD_DATA, SagaHelper_default);
+  yield takeEvery(GET_USER_DEVICES, SagaHelper_default);
+  yield takeEvery(ADD_PERMISSION, SagaHelper_default);
+  yield takeEvery(PERMISSION_UPDATE, SagaHelper_default);
+  yield takeEvery(GET_PERMISSION_BY_ID, SagaHelper_default);
+  yield takeEvery(UPDATE_PERMISSION_BY_ID, SagaHelper_default);
+  yield takeEvery(ADMIN_USER_VIEW, SagaHelper_default);
+  yield takeEvery(ADMIN_DESIGNATION_VIEW, SagaHelper_default);
+  yield takeEvery(ADMIN_DEPARTMENTS_VIEW, SagaHelper_default);
+  yield takeEvery(ADMIN_ROLES_DESIGNATION_DEPARTMENT_VIEW, SagaHelper_default);
+  yield takeEvery(ADMIN_USER_ROLE_DESIGNATION_DEPARTMENT_VIEW, SagaHelper_default);
+  yield takeEvery(ADMIN_PERMISSION_GROUPS_VIEW, SagaHelper_default);
+  yield takeEvery(ADMIN_PERMISSION_GROUPS_PERMISSIONS_VIEW, SagaHelper_default);
+  yield takeEvery(ADMIN_USER_ROLE_DESIGNATION_PERMISSIONS_VIEW, SagaHelper_default);
+  yield takeEvery(ADMIN_USER_VIEW, SagaHelper_default);
+  yield takeEvery("admin_user_update", SagaHelper_default);
+  yield takeEvery("admin_urdd_list", SagaHelper_default);
+  yield takeEvery("admin_urdd_add", SagaHelper_default);
+  yield takeEvery(UPDATE_CURRENT_USER_ROLE, ReduxOnlySagaHelper_default);
+  yield takeEvery(UPDATE_LOADING_STATE, ReduxOnlySagaHelper_default);
+  yield takeEvery(LOGOUT_CURRENT_USER, ReduxOnlySagaHelper_default);
+  yield takeEvery(API_DOCUMENTATION, SagaHelper_default);
+  yield takeEvery(GET_INDIVIDUAL_LEADERBOARD_DATA, SagaHelper_default);
+  yield takeEvery(GET_GROUP_LEADERBOARD_DATA, SagaHelper_default);
+  yield takeEvery(GET_USER_DEVICES_OTP, SagaHelper_default);
+  yield takeEvery(ADD_DEVICE, SagaHelper_default);
+  yield takeEvery(ADD_DEVICE_OTP, SagaHelper_default);
+  yield takeEvery(FETCH_CLASS_ACTIVITIES, SagaHelper_default);
 }
 var generalSagas_default = dataSaga;
 
 // src/Common/Store/Sagas/rootSaga.js
 function* rootSaga() {
-  yield (0, import_effects4.all)([
+  yield all([
     generalSagas_default()
   ]);
 }
@@ -630,27 +621,27 @@ var rootSaga_default = rootSaga;
 // src/Common/Store/configureStore.js
 var persistConfig = {
   key: "root",
-  storage: import_storage.default
+  storage
 };
-var persistedReducer = (0, import_redux_persist.persistReducer)(persistConfig, Reducers_default);
-var sagaMiddleware = (0, import_redux_saga.default)();
-var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || import_redux2.compose;
-var store = (0, import_redux2.createStore)(
+var persistedReducer = persistReducer(persistConfig, Reducers_default);
+var sagaMiddleware = createSagaMiddleware();
+var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+var store = createStore(
   persistedReducer,
-  composeEnhancers((0, import_redux2.applyMiddleware)(sagaMiddleware))
+  composeEnhancers(applyMiddleware(sagaMiddleware))
 );
 sagaMiddleware.run(rootSaga_default);
-var persistor = (0, import_redux_persist.persistStore)(store);
+var persistor = persistStore(store);
 
 // src/Common/getServerResponse.js
-var import_redux_saga2 = require("redux-saga");
+import { runSaga } from "redux-saga";
 var getServerResponse = async (serverCommunication, queryParam = null, qparam = null, setIsLoading = null) => {
   if (!(serverCommunication == null ? void 0 : serverCommunication.apiUrl)) {
     console.error("Error", "No API URL provided");
     return;
   }
   try {
-    const response = await (0, import_redux_saga2.runSaga)(
+    const response = await runSaga(
       {
         dispatch: () => {
         },
@@ -705,8 +696,8 @@ function serverCommunicationHelper({
 }
 
 // src/Common/ToastUtils.js
-var import_react_toastify = require("react-toastify");
-var import_ReactToastify = require("react-toastify/dist/ReactToastify.css");
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 var toastConfig = {
   position: "top-right",
   autoClose: 3e3,
@@ -716,19 +707,18 @@ var toastConfig = {
   draggable: true
 };
 var showSuccessToast = (message) => {
-  import_react_toastify.toast.success(message, toastConfig);
+  toast.success(message, toastConfig);
 };
 var showErrorToast = (message) => {
-  import_react_toastify.toast.error(message, toastConfig);
+  toast.error(message, toastConfig);
 };
 var showInfoToast = (message) => {
-  import_react_toastify.toast.info(message, toastConfig);
+  toast.info(message, toastConfig);
 };
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
+export {
   getServerResponse,
   serverCommunicationHelper,
   showErrorToast,
   showInfoToast,
   showSuccessToast
-});
+};

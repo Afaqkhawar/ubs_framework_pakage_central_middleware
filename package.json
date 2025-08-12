@@ -9,7 +9,7 @@
     "postinstall.js"
   ],
   "scripts": {
-    "build": "tsup index.js --format cjs --out-dir dist --minify --sourcemap false"
+    "build": "tsup index.js --format cjs --out-dir dist  false"
   },
   "peerDependencies": {
     "@emotion/react": "^11.0.0",

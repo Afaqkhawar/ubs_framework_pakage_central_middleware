@@ -1,22 +1,16 @@
 {
   "name": "central-middleware",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "A reusable React GraphBuilder component with built-in graph types and API handling.",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
-    }
-  },
+  "main": "./dist/index.cjs",
+  "type": "commonjs",
   "files": [
     "dist",
     "postinstall.js"
   ],
-  "scripts": {
-   "build": "tsup index.js --format cjs --minify --sourcemap false"
-  },
+"scripts": {
+  "build": "tsup index.js --format cjs --out-dir dist --minify --sourcemap false"
+},
   "peerDependencies": {
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
@@ -31,28 +25,5 @@
   "devDependencies": {
     "tsup": "^7.2.0"
   },
-  "keywords": [
-    "react",
-    "graph",
-    "charts",
-    "component",
-    "recharts",
-    "apexcharts",
-    "redux",
-    "saga",
-    "toastify"
-  ],
-  "author": "Afaq Khawar",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Afaqkhawar/ubs_framework_pakage_central_middleware.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Afaqkhawar/ubs_framework_pakage_central_middleware/issues"
-  },
-  "homepage": "https://github.com/Afaqkhawar/ubs_framework_pakage_central_middleware#readme",
-  "publishConfig": {
-    "access": "public"
-  }
+  "license": "MIT"
 }

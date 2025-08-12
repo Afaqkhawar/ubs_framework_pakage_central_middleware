@@ -3,7 +3,7 @@
   "version": "1.0.19",
   "description": "A reusable React GraphBuilder component with built-in graph types and API handling.",
   "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
+  "module": "dist/index.js",
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
@@ -15,7 +15,7 @@
     "postinstall.js"
   ],
   "scripts": {
-   "build": "tsup index.js --format cjs,esm --legacy-output --minify --sourcemap false"
+   "build": "tsup index.js --format cjs --minify --sourcemap false"
   },
   "peerDependencies": {
     "@emotion/react": "^11.0.0",

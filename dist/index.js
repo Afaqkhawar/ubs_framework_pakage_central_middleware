@@ -158,6 +158,7 @@ __export(central_middleware_exports, {
   showSuccessToast: () => showSuccessToast,
   store: () => store,
   updateCurrentRole: () => updateCurrentRole,
+  updateCurrentRolessss: () => updateCurrentRolessss,
   updateLoading: () => updateLoading,
   updateUserData: () => updateUserData,
   verifyOtp: () => verifyOtp
@@ -1110,6 +1111,17 @@ var addDeviceOTP = (user_device_id, data, onSuccess, onFailure) => {
   };
 };
 
+// src/Common/Store/Actions/General/UpdateActions/reduxUpdateUserData.js
+var updateCurrentRolessss = (data) => {
+  return {
+    type: UPDATE_CURRENT_USER_ROLE,
+    payload: {
+      reduxActionType: REDUX_UPDATE_CURRENT_USER_ROLE,
+      data
+    }
+  };
+};
+
 // src/Common/Store/Actions/General/UpdateActions/updateCurrentRole.js
 var updateCurrentRole = (data) => {
   return {
@@ -1256,6 +1268,7 @@ var checkPermissionParser = (apiData) => {
   showSuccessToast,
   store,
   updateCurrentRole,
+  updateCurrentRolessss,
   updateLoading,
   updateUserData,
   verifyOtp

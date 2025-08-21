@@ -7,3 +7,5 @@ export {showErrorToast} from './src/Common/ToastUtils.js';
 export {showInfoToast} from './src/Common/ToastUtils.js';
 // Re-export all action creators and action types
 export * from './src/Common/Store/Actions/index.js';
+// Re-export store and persistor
+export { store, persistor } from './src/Common/Store/configureStore.js';

@@ -1,7 +1,7 @@
 {
-  "name": "form-react",
+  "name": "form-fields-react",
   "version": "1.0.0",
-  "description": "A reusable React Form  with built-in  fields.",
+  "description": "A reusable React Form Field component with built-in  fields.",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,13 +20,26 @@
   },
   "dependencies": {
     "central-middleware": "https://github.com/Afaqkhawar/ubs_framework_pakage_central_middleware/raw/main/central-middleware-1.0.23.tgz",
-    "form-fields-react": "https://github.com/Afaqkhawar/ubs_framework_pakage_central_middleware/raw/form-fields-react/form-fields-react-1.0.0.tgz",
     "react-phone-input-2": "^2.15.1"
   },
   "peerDependencies": {
     "@emotion/react": "^11.0.0",
+    "@mantine/core": "^7.15.3",
+    "@mantine/tiptap": "^7.15.3",
     "@mui/icons-material": "^6.1.6",
     "@mui/material": "^6.1.6",
+    "@tabler/icons-react": "^3.22.0",
+    "@tiptap/extension-color": "^2.10.3",
+    "@tiptap/extension-highlight": "^2.10.3",
+    "@tiptap/extension-link": "^2.11.0",
+    "@tiptap/extension-placeholder": "^2.10.3",
+    "@tiptap/extension-subscript": "^2.10.3",
+    "@tiptap/extension-superscript": "^2.10.3",
+    "@tiptap/extension-text-align": "^2.10.3",
+    "@tiptap/extension-text-style": "^2.10.3",
+    "@tiptap/extension-underline": "^2.10.3",
+    "@tiptap/react": "^2.10.3",
+    "@tiptap/starter-kit": "^2.10.3",
     "react": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {

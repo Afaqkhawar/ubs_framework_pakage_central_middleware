@@ -1,4 +1,6 @@
 const constants = {
+  GOOGLE_CLIENT_ID : process.env.REACT_APP_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID",
+  FACEBOOK_APP_ID : process.env.REACT_APP_FACEBOOK_APP_ID || "YOUR_FACEBOOK_APP_ID",
   base_url:process.env.REACT_APP_CENTRAL_MIDDLEWARE_BASE_URL, //default
   // base_url: 'http://10.0.0.68:3000/api',            //self
   // base_url: "http://localhost:3000/api", //local

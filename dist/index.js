@@ -86,12 +86,78 @@ var require_encryption = __commonJS({
 // index.js
 var central_middleware_exports = {};
 __export(central_middleware_exports, {
+  ADD_DEVICE: () => ADD_DEVICE,
+  ADD_DEVICE_OTP: () => ADD_DEVICE_OTP,
+  ADD_PERMISSION: () => ADD_PERMISSION,
+  ADD_ROLE: () => ADD_ROLE,
+  ADD_USER: () => ADD_USER,
+  ADD_USER_DEVICE: () => ADD_USER_DEVICE,
+  ADMIN_DEPARTMENTS_VIEW: () => ADMIN_DEPARTMENTS_VIEW,
+  ADMIN_DESIGNATION_VIEW: () => ADMIN_DESIGNATION_VIEW,
+  ADMIN_PERMISSION_GROUPS_PERMISSIONS_VIEW: () => ADMIN_PERMISSION_GROUPS_PERMISSIONS_VIEW,
+  ADMIN_PERMISSION_GROUPS_VIEW: () => ADMIN_PERMISSION_GROUPS_VIEW,
+  ADMIN_ROLES_DESIGNATION_DEPARTMENT_VIEW: () => ADMIN_ROLES_DESIGNATION_DEPARTMENT_VIEW,
+  ADMIN_USER_ROLE_DESIGNATION_DEPARTMENT_VIEW: () => ADMIN_USER_ROLE_DESIGNATION_DEPARTMENT_VIEW,
+  ADMIN_USER_ROLE_DESIGNATION_PERMISSIONS_VIEW: () => ADMIN_USER_ROLE_DESIGNATION_PERMISSIONS_VIEW,
+  ADMIN_USER_VIEW: () => ADMIN_USER_VIEW,
+  ADMIN_VIEW_USER: () => ADMIN_VIEW_USER,
+  API_DOCUMENTATION: () => API_DOCUMENTATION,
+  DELETE_ROLE: () => DELETE_ROLE,
+  DELETE_USER: () => DELETE_USER,
+  FETCH_CLASS_ACTIVITIES: () => FETCH_CLASS_ACTIVITIES,
+  FETCH_USER_DEVICES: () => FETCH_USER_DEVICES,
+  GET_ADMIN_DASHBOARD_DATA: () => GET_ADMIN_DASHBOARD_DATA,
+  GET_ALL_PERMISSIONS: () => GET_ALL_PERMISSIONS,
+  GET_ALL_PERMISSIONS_GROUPS: () => GET_ALL_PERMISSIONS_GROUPS,
+  GET_ALL_ROLES: () => GET_ALL_ROLES,
+  GET_ALL_USERS: () => GET_ALL_USERS,
+  GET_ALL_USER_ROLE_PERMISSIONS_GROUPS: () => GET_ALL_USER_ROLE_PERMISSIONS_GROUPS,
+  GET_GROUPS: () => GET_GROUPS,
+  GET_GROUP_LEADERBOARD_DATA: () => GET_GROUP_LEADERBOARD_DATA,
+  GET_INDIVIDUAL_LEADERBOARD_DATA: () => GET_INDIVIDUAL_LEADERBOARD_DATA,
+  GET_OTP: () => GET_OTP,
+  GET_PERMISSION_BY_ID: () => GET_PERMISSION_BY_ID,
+  GET_USER_DEVICES: () => GET_USER_DEVICES,
+  GET_USER_DEVICES_OTP: () => GET_USER_DEVICES_OTP,
+  LOGOUT_CURRENT_USER: () => LOGOUT_CURRENT_USER,
+  PERMISSION_UPDATE: () => PERMISSION_UPDATE,
+  REDUX_API_DOCUMENTATION: () => REDUX_API_DOCUMENTATION,
+  REDUX_LOGOUT_CURRENT_USER: () => REDUX_LOGOUT_CURRENT_USER,
+  REDUX_UPDATE_CURRENT_USER: () => REDUX_UPDATE_CURRENT_USER,
+  REDUX_UPDATE_CURRENT_USER_ROLE: () => REDUX_UPDATE_CURRENT_USER_ROLE,
+  REDUX_UPDATE_LOADING_STATE: () => REDUX_UPDATE_LOADING_STATE,
+  REDUX_UPDATE_USER_DATA: () => REDUX_UPDATE_USER_DATA,
+  UPDATE_CURRENT_USER_ROLE: () => UPDATE_CURRENT_USER_ROLE,
+  UPDATE_LOADING_STATE: () => UPDATE_LOADING_STATE,
+  UPDATE_PERMISSION_BY_ID: () => UPDATE_PERMISSION_BY_ID,
+  UPDATE_USER_DATA: () => UPDATE_USER_DATA,
+  VERIFY_OTP: () => VERIFY_OTP,
+  addDevice: () => addDevice,
+  addDeviceOTP: () => addDeviceOTP,
+  checkPermissionParser: () => checkPermissionParser,
+  clearLeaderboard: () => clearLeaderboard,
   constants: () => Constants_default,
+  facebookLogin: () => facebookLogin,
+  fetchClassActivitiesByDate: () => fetchClassActivitiesByDate,
+  getAdminDashboardData: () => getAdminDashboardData,
+  getApiDocumentation: () => getApiDocumentation,
+  getApiResponse: () => getApiResponse,
+  getGroupLeaderboardData: () => getGroupLeaderboardData,
+  getIndividualLeaderboardData: () => getIndividualLeaderboardData,
+  getOtp: () => getOtp,
   getServerResponse: () => getServerResponse,
+  getUserDevices: () => getUserDevices,
+  getUserDevicesOTP: () => getUserDevicesOTP,
+  googleLogin: () => googleLogin,
+  logoutUser: () => logoutUser,
+  sagaCommunicationAction: () => sagaCommunicationAction,
   serverCommunicationHelper: () => serverCommunicationHelper,
   showErrorToast: () => showErrorToast,
   showInfoToast: () => showInfoToast,
-  showSuccessToast: () => showSuccessToast
+  showSuccessToast: () => showSuccessToast,
+  updateLoading: () => updateLoading,
+  updateUserData: () => updateUserData,
+  verifyOtp: () => verifyOtp
 });
 module.exports = __toCommonJS(central_middleware_exports);
 
@@ -221,7 +287,10 @@ var GET_USER_DEVICES_OTP = "GET_USER_DEVICES_OTP";
 var ADD_DEVICE = "ADD_DEVICE";
 var ADD_DEVICE_OTP = "ADD_DEVICE_OTP";
 var FETCH_CLASS_ACTIVITIES = "FETCH_CLASS_ACTIVITIES";
+var FETCH_USER_DEVICES = "FETCH_USER_DEVICES";
+var ADD_USER_DEVICE = "ADD_USER_DEVICE";
 var API_DOCUMENTATION = "API_DOCUMENTATION";
+var ADMIN_VIEW_USER = "ADMIN_VIEW_USER";
 
 // src/Common/Store/Sagas/general/generalSagas.js
 var import_effects3 = require("redux-saga/effects");
@@ -232,6 +301,8 @@ var import_encryption = __toESM(require_encryption());
 
 // src/Common/Constants.js
 var constants = {
+  GOOGLE_CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID",
+  FACEBOOK_APP_ID: process.env.REACT_APP_FACEBOOK_APP_ID || "YOUR_FACEBOOK_APP_ID",
   base_url: process.env.REACT_APP_CENTRAL_MIDDLEWARE_BASE_URL,
   //default
   // base_url: 'http://10.0.0.68:3000/api',            //self
@@ -725,12 +796,450 @@ var showErrorToast = (message) => {
 var showInfoToast = (message) => {
   import_react_toastify.toast.info(message, toastConfig);
 };
+
+// src/Common/Store/Actions/General/sagaCommunicationAction.js
+var sagaCommunicationAction = (props, queryParam = "", onSuccess, onFailure, queryParamsId = null) => {
+  let apiURL = props.apiUrl + queryParam;
+  if (queryParamsId) {
+    apiURL = apiURL + "&id=" + queryParamsId;
+  }
+  return {
+    type: props.apiActionType,
+    payload: {
+      requestType: props.requestType,
+      apiUrl: apiURL,
+      reduxActionType: props.reduxActionType,
+      body: props.body,
+      metaData: props.metaData,
+      header: props.header,
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/AuthActions/facebookLogin.js
+var import_axios = __toESM(require("axios"));
+var facebookLogin = (accessToken, userId, osName, osVersion, deviceUUID, successCallback, failureCallback) => {
+  return (dispatch) => {
+    import_axios.default.post(`${Constants_default.base_url}/api/auth/facebook-login`, {
+      accessToken,
+      userId,
+      osName,
+      osVersion,
+      deviceUUID
+    }).then((res) => {
+      const { token, user } = res.data;
+      localStorage.setItem("auth_token", token);
+      localStorage.setItem("user_info", JSON.stringify(user));
+      if (successCallback) {
+        successCallback(res.data);
+      }
+    }).catch((err) => {
+      var _a;
+      console.error("Facebook login error:", err);
+      if (failureCallback) {
+        failureCallback(((_a = err.response) == null ? void 0 : _a.data) || err);
+      }
+    });
+  };
+};
+
+// src/Common/Store/Actions/General/AuthActions/getOtp.js
+var getOtp = (email, deviceName = "un_known", os_version, device_identifier, platform_version, accesstoken, onSuccess, onFailure) => {
+  return {
+    type: GET_OTP,
+    payload: {
+      requestType: "POST",
+      apiUrl: Constants_default.login + Constants_default.version + Constants_default.step1,
+      reduxActionType: "",
+      body: {
+        email,
+        device_identifier,
+        device_name: deviceName,
+        platform_version,
+        os_version
+        // accesstoken:accesstoken
+      },
+      metaData: true,
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/AuthActions/googleLogin.js
+var import_axios2 = __toESM(require("axios"));
+var googleLogin = (tokenId, osName, osVersion, deviceUUID, successCallback, failureCallback) => {
+  return (dispatch) => {
+    import_axios2.default.post(`${Constants_default.base_url}/api/auth/google-login`, {
+      tokenId,
+      osName,
+      osVersion,
+      deviceUUID
+    }).then((res) => {
+      const { token, user } = res.data;
+      localStorage.setItem("auth_token", token);
+      localStorage.setItem("user_info", JSON.stringify(user));
+      if (successCallback) {
+        successCallback(res.data);
+      }
+    }).catch((err) => {
+      var _a;
+      console.error("Google login error:", err);
+      if (failureCallback) {
+        failureCallback(((_a = err.response) == null ? void 0 : _a.data) || err);
+      }
+    });
+  };
+};
+
+// src/Common/Store/Actions/General/AuthActions/verifyOtp.js
+var verifyOtp = (email, otp, platform, version, UID, onSuccess, onFailure) => {
+  return {
+    type: VERIFY_OTP,
+    payload: {
+      requestType: "POST",
+      apiUrl: Constants_default.login + Constants_default.version + Constants_default.step2,
+      reduxActionType: REDUX_UPDATE_CURRENT_USER,
+      body: {
+        email,
+        otp,
+        device_name: platform,
+        os_version: version,
+        device_identifier: UID
+      },
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/GetActions/clearLeaderboard.js
+var clearLeaderboard = (selectedCActivityId, onSuccess, onFailure) => {
+  return {
+    type: GET_INDIVIDUAL_LEADERBOARD_DATA,
+    payload: {
+      requestType: "DELETE",
+      apiUrl: `/crud/Students_class_activity` + Constants_default.version + `&id=${selectedCActivityId}`,
+      reduxActionType: "",
+      metaData: true,
+      body: {},
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/GetActions/fetchClassActivitiesByDate.js
+var fetchClassActivitiesByDate = (selectedDate, onSuccess, onFailure) => {
+  return {
+    type: FETCH_CLASS_ACTIVITIES,
+    payload: {
+      requestType: "GET",
+      apiUrl: `/class_activities/by/date${Constants_default.version}&date=${selectedDate}`,
+      reduxActionType: "",
+      metaData: true,
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/GetActions/getAdminDashboardData.js
+var getAdminDashboardData = (onSuccess, onFailure) => {
+  return {
+    type: GET_ADMIN_DASHBOARD_DATA,
+    payload: {
+      requestType: "GET",
+      apiUrl: Constants_default.get_admin_dashboard_data + Constants_default.version,
+      reduxActionType: "",
+      metaData: true,
+      body: {},
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/GetActions/getApiDocumentation.js
+var getApiDocumentation = (onSuccess, onFailure) => {
+  return {
+    type: API_DOCUMENTATION,
+    payload: {
+      requestType: "GET",
+      apiUrl: Constants_default.api_documentation + Constants_default.version,
+      reduxActionType: REDUX_API_DOCUMENTATION,
+      body: {},
+      metaData: true,
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/GetActions/getApiResponse.js
+var getApiResponse = (onSuccess, class_section_subject_teacher_id = 2, studentId = 42, onFailure) => {
+  return {
+    type: GET_INDIVIDUAL_LEADERBOARD_DATA,
+    payload: {
+      requestType: "GET",
+      apiUrl: `/login/device/via_otp?version=1.0&otp=620477`,
+      reduxActionType: "",
+      metaData: true,
+      body: { otp: "kYjga2" },
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/GetActions/getGroupLeaderboardData.js
+var getGroupLeaderboardData = (class_activity_id = 1, onSuccess, onFailure) => {
+  return {
+    type: GET_GROUP_LEADERBOARD_DATA,
+    payload: {
+      requestType: "GET",
+      apiUrl: Constants_default.group_leaderboard + Constants_default.version + `&id=${class_activity_id}`,
+      reduxActionType: "",
+      metaData: true,
+      body: {},
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/GetActions/getIndividualLeaderboardData.js
+var getIndividualLeaderboardData = (class_activity_id = 1, onSuccess, onFailure) => {
+  console.log("class_activity_id", class_activity_id);
+  return {
+    type: GET_INDIVIDUAL_LEADERBOARD_DATA,
+    payload: {
+      requestType: "GET",
+      apiUrl: Constants_default.individual_leaderboard + Constants_default.version + `&id=${class_activity_id}`,
+      reduxActionType: "",
+      metaData: true,
+      isEncrypted: true,
+      body: {},
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/GetActions/getUserDevices.js
+var getUserDevices = (onSuccess, onFailure) => {
+  return {
+    type: GET_USER_DEVICES,
+    payload: {
+      requestType: "GET",
+      apiUrl: Constants_default.list_all_user_devices,
+      reduxActionType: "",
+      metaData: true,
+      body: {},
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/GetActions/getUserDevicesOTP.js
+var getUserDevicesOTP = (user_id, onSuccess, onFailure) => {
+  return {
+    type: GET_USER_DEVICES_OTP,
+    payload: {
+      requestType: "GET",
+      apiUrl: `/crud/user/devices?version=1.0&id=${user_id}`,
+      reduxActionType: "",
+      metaData: true,
+      body: {},
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/PostActions/addUserDevice.js
+var addDevice = (data, onSuccess, onFailure) => {
+  console.log("addDevice", data);
+  return {
+    type: ADD_DEVICE,
+    payload: {
+      requestType: "POST",
+      apiUrl: `/crud/user/devices?version=1.0`,
+      reduxActionType: "",
+      metaData: true,
+      body: data,
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/PostActions/addUserDevicesOTP.js
+var addDeviceOTP = (user_device_id, data, onSuccess, onFailure) => {
+  console.log("addDeviceOTP", user_device_id, data);
+  return {
+    type: ADD_DEVICE_OTP,
+    payload: {
+      requestType: "POST",
+      apiUrl: `/add/device/otp?version=1.0&id=${user_device_id}`,
+      reduxActionType: "",
+      metaData: true,
+      body: data,
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/UpdateActions/updateLoading.js
+var updateLoading = (isLoading) => {
+  return {
+    type: UPDATE_LOADING_STATE,
+    payload: {
+      reduxActionType: REDUX_UPDATE_LOADING_STATE,
+      data: isLoading
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/UpdateActions/updateLoginState.js
+var logoutUser = () => {
+  return {
+    type: LOGOUT_CURRENT_USER,
+    payload: {
+      reduxActionType: REDUX_LOGOUT_CURRENT_USER,
+      data: {}
+    }
+  };
+};
+
+// src/Common/Store/Actions/General/UpdateActions/updateUserData.js
+var updateUserData = (data, onSuccess, onFailure) => {
+  return {
+    type: UPDATE_USER_DATA,
+    payload: {
+      requestType: "PUT",
+      apiUrl: "/api/update/user?version=1.0",
+      reduxActionType: REDUX_UPDATE_USER_DATA,
+      body: {
+        id: (data == null ? void 0 : data.id) || "",
+        first_name: (data == null ? void 0 : data.firstName) || "",
+        last_name: (data == null ? void 0 : data.lastName) || "",
+        email: (data == null ? void 0 : data.email) || "",
+        phone_no: (data == null ? void 0 : data.phoneNo) || ""
+      },
+      metaData: true,
+      header: "application/json",
+      onSuccess,
+      onFailure
+    }
+  };
+};
+
+// src/Common/Store/Actions/sampleHitApi.js
+var checkPermissionParser = (apiData) => {
+  return {
+    type: apiData.apiActionType,
+    payload: {
+      permission: apiData.permission,
+      requestType: apiData.requestType,
+      apiUrl: apiData == null ? void 0 : apiData.apiUrl,
+      reduxActionType: apiData.reduxActionType,
+      body: apiData.body,
+      header: "application/json",
+      onSuccess: apiData.onSuccess,
+      onFailure: apiData.onFailure
+    }
+  };
+};
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  ADD_DEVICE,
+  ADD_DEVICE_OTP,
+  ADD_PERMISSION,
+  ADD_ROLE,
+  ADD_USER,
+  ADD_USER_DEVICE,
+  ADMIN_DEPARTMENTS_VIEW,
+  ADMIN_DESIGNATION_VIEW,
+  ADMIN_PERMISSION_GROUPS_PERMISSIONS_VIEW,
+  ADMIN_PERMISSION_GROUPS_VIEW,
+  ADMIN_ROLES_DESIGNATION_DEPARTMENT_VIEW,
+  ADMIN_USER_ROLE_DESIGNATION_DEPARTMENT_VIEW,
+  ADMIN_USER_ROLE_DESIGNATION_PERMISSIONS_VIEW,
+  ADMIN_USER_VIEW,
+  ADMIN_VIEW_USER,
+  API_DOCUMENTATION,
+  DELETE_ROLE,
+  DELETE_USER,
+  FETCH_CLASS_ACTIVITIES,
+  FETCH_USER_DEVICES,
+  GET_ADMIN_DASHBOARD_DATA,
+  GET_ALL_PERMISSIONS,
+  GET_ALL_PERMISSIONS_GROUPS,
+  GET_ALL_ROLES,
+  GET_ALL_USERS,
+  GET_ALL_USER_ROLE_PERMISSIONS_GROUPS,
+  GET_GROUPS,
+  GET_GROUP_LEADERBOARD_DATA,
+  GET_INDIVIDUAL_LEADERBOARD_DATA,
+  GET_OTP,
+  GET_PERMISSION_BY_ID,
+  GET_USER_DEVICES,
+  GET_USER_DEVICES_OTP,
+  LOGOUT_CURRENT_USER,
+  PERMISSION_UPDATE,
+  REDUX_API_DOCUMENTATION,
+  REDUX_LOGOUT_CURRENT_USER,
+  REDUX_UPDATE_CURRENT_USER,
+  REDUX_UPDATE_CURRENT_USER_ROLE,
+  REDUX_UPDATE_LOADING_STATE,
+  REDUX_UPDATE_USER_DATA,
+  UPDATE_CURRENT_USER_ROLE,
+  UPDATE_LOADING_STATE,
+  UPDATE_PERMISSION_BY_ID,
+  UPDATE_USER_DATA,
+  VERIFY_OTP,
+  addDevice,
+  addDeviceOTP,
+  checkPermissionParser,
+  clearLeaderboard,
   constants,
+  facebookLogin,
+  fetchClassActivitiesByDate,
+  getAdminDashboardData,
+  getApiDocumentation,
+  getApiResponse,
+  getGroupLeaderboardData,
+  getIndividualLeaderboardData,
+  getOtp,
   getServerResponse,
+  getUserDevices,
+  getUserDevicesOTP,
+  googleLogin,
+  logoutUser,
+  sagaCommunicationAction,
   serverCommunicationHelper,
   showErrorToast,
   showInfoToast,
-  showSuccessToast
+  showSuccessToast,
+  updateLoading,
+  updateUserData,
+  verifyOtp
 });

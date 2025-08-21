@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../../../../../Config/constant";
+import constants from "../../../../Constants";
 
 export const googleLogin = (
   tokenId,
@@ -11,7 +11,7 @@ export const googleLogin = (
 ) => {
   return (dispatch) => {
     axios
-      .post(`${BASE_URL}/api/auth/google-login`, {
+      .post(`${constants.base_url}/api/auth/google-login`, {
         tokenId: tokenId,
         osName: osName,
         osVersion: osVersion,

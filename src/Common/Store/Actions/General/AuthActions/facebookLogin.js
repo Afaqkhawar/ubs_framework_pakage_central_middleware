@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../../../../../Config/constant";
+import constants from "../../../../Constants";
 
 export const facebookLogin = (
   accessToken,
@@ -12,7 +12,7 @@ export const facebookLogin = (
 ) => {
   return (dispatch) => {
     axios
-      .post(`${BASE_URL}/api/auth/facebook-login`, {
+      .post(`${constants.base_url}/api/auth/facebook-login`, {
         accessToken: accessToken,
         userId: userId,
         osName: osName,

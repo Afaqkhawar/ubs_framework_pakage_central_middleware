@@ -1,47 +1,46 @@
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-
-// index.js
-var packages_builder_exports = {};
-__export(packages_builder_exports, {
-  Form: () => Form_default
-});
-module.exports = __toCommonJS(packages_builder_exports);
-
 // src/Form/Form.js
-var import_react2 = __toESM(require("react"));
-var import_material3 = require("@mui/material");
-var import_react_redux = require("react-redux");
-var import_icons_material = require("@mui/icons-material");
-var import_material4 = require("@mui/material");
+import React2, { useEffect as useEffect2, useState, forwardRef, useRef } from "react";
+import {
+  Box as Box2,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
+  Card as Card2,
+  useMediaQuery,
+  useTheme,
+  Grid as Grid2
+} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { Close } from "@mui/icons-material";
+import { CircularProgress } from "@mui/material";
 
 // src/Form/Fields/HelperFunctions.js
-var import_form_fields_react = require("form-fields-react");
+import {
+  SectionField,
+  TextFieldRender,
+  SelectDependant,
+  SelectFieldRender,
+  RadioFieldRender,
+  MultiSelectFieldRender,
+  NumberFieldRender,
+  TextAreaFieldRender,
+  CheckboxFieldRender,
+  ColorFieldRender,
+  URLFieldRender,
+  RangeFieldRender,
+  TimeFieldRender,
+  DateFieldRender,
+  DateTimeFieldRender,
+  PasswordFieldRender,
+  FileFieldRender,
+  SelectOnFieldsRender,
+  Report,
+  EmailFieldRender,
+  ListOfSections,
+  PhoneNumberFieldRender
+} from "form-fields-react";
 
 // src/Form/fieldsMapper.js
 var inlineProps = [
@@ -190,9 +189,9 @@ var mapper = [
 var fieldsMapper_default = mapper;
 
 // src/Form/Fields/HelperFunctions.js
-var import_material = require("@mui/material");
-var import_createTransitions = require("@mui/material/styles/createTransitions.js");
-var import_jsx_runtime = require("react/jsx-runtime");
+import { Grid } from "@mui/material";
+import { create } from "@mui/material/styles/createTransitions.js";
+import { jsx } from "react/jsx-runtime";
 var getSectionValue = (stepsData, currentStep, formValues, fields) => {
   let sectionTitle = "";
   console.log("what i get", stepsData, currentStep, formValues);
@@ -247,29 +246,29 @@ var getSectionValue = (stepsData, currentStep, formValues, fields) => {
   return sectionValue;
 };
 var componentsMap = {
-  SectionField: import_form_fields_react.SectionField,
-  TextFieldRender: import_form_fields_react.TextFieldRender,
-  SelectFieldRender: import_form_fields_react.SelectFieldRender,
-  MultiSelectFieldRender: import_form_fields_react.MultiSelectFieldRender,
-  NumberFieldRender: import_form_fields_react.NumberFieldRender,
-  TextAreaFieldRender: import_form_fields_react.TextAreaFieldRender,
-  CheckboxFieldRender: import_form_fields_react.CheckboxFieldRender,
-  ColorFieldRender: import_form_fields_react.ColorFieldRender,
-  URLFieldRender: import_form_fields_react.URLFieldRender,
-  RangeFieldRender: import_form_fields_react.RangeFieldRender,
-  RadioFieldRender: import_form_fields_react.RadioFieldRender,
-  PasswordFieldRender: import_form_fields_react.PasswordFieldRender,
-  TimeFieldRender: import_form_fields_react.TimeFieldRender,
-  DateFieldRender: import_form_fields_react.DateFieldRender,
-  DateTimeFieldRender: import_form_fields_react.DateTimeFieldRender,
-  FileFieldRender: import_form_fields_react.FileFieldRender,
-  SelectDependant: import_form_fields_react.SelectDependant,
-  SelectOnFieldsRender: import_form_fields_react.SelectOnFieldsRender,
-  Report: import_form_fields_react.Report,
+  SectionField,
+  TextFieldRender,
+  SelectFieldRender,
+  MultiSelectFieldRender,
+  NumberFieldRender,
+  TextAreaFieldRender,
+  CheckboxFieldRender,
+  ColorFieldRender,
+  URLFieldRender,
+  RangeFieldRender,
+  RadioFieldRender,
+  PasswordFieldRender,
+  TimeFieldRender,
+  DateFieldRender,
+  DateTimeFieldRender,
+  FileFieldRender,
+  SelectDependant,
+  SelectOnFieldsRender,
+  Report,
   // TableOfFields,
-  EmailFieldRender: import_form_fields_react.EmailFieldRender,
-  ListOfSections: import_form_fields_react.ListOfSections,
-  PhoneNumberFieldRender: import_form_fields_react.PhoneNumberFieldRender
+  EmailFieldRender,
+  ListOfSections,
+  PhoneNumberFieldRender
   // SignaturePadFieldRender,
   // RichTextFieldRender,
   // RatingFieldRender,
@@ -295,7 +294,7 @@ var renderComponent = (field, scopeVariables) => {
       return null;
     }
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Component, { ...props });
+  return /* @__PURE__ */ jsx(Component, { ...props });
 };
 var renderFields = ({
   serverMode,
@@ -394,17 +393,17 @@ function updateDemoFormDataWithDynamicKeys(field, parentKey = "") {
 }
 
 // src/Form/FeatureTabs.js
-var import_react = __toESM(require("react"));
-var import_Card = __toESM(require("@mui/material/Card"));
-var import_material2 = require("@mui/material");
-var import_prop_types = __toESM(require("prop-types"));
-var import_Tabs = __toESM(require("@mui/material/Tabs"));
-var import_Tab = __toESM(require("@mui/material/Tab"));
-var import_Box = __toESM(require("@mui/material/Box"));
-var import_jsx_runtime2 = require("react/jsx-runtime");
+import React, { useEffect } from "react";
+import Card from "@mui/material/Card";
+import { Typography } from "@mui/material";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import { jsx as jsx2 } from "react/jsx-runtime";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+  return /* @__PURE__ */ jsx2(
     "div",
     {
       role: "tabpanel",
@@ -412,18 +411,18 @@ function TabPanel(props) {
       id: `simple-tabpanel-${index}`,
       "aria-labelledby": `simple-tab-${index}`,
       ...other,
-      children: value === index && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_Box.default, { sx: { p: 3 }, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_material2.Typography, { children }) })
+      children: value === index && /* @__PURE__ */ jsx2(Box, { sx: { p: 3 }, children: /* @__PURE__ */ jsx2(Typography, { children }) })
     }
   );
 }
 TabPanel.propTypes = {
-  children: import_prop_types.default.node,
-  index: import_prop_types.default.number.isRequired,
-  value: import_prop_types.default.number.isRequired
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired
 };
 function BasicTabs({ tabs, activeStep = 0 }) {
-  const [currentStep, setCurrentStep] = import_react.default.useState(activeStep);
-  (0, import_react.useEffect)(() => {
+  const [currentStep, setCurrentStep] = React.useState(activeStep);
+  useEffect(() => {
     console.log(activeStep);
     setCurrentStep(activeStep);
   }, [activeStep]);
@@ -431,16 +430,16 @@ function BasicTabs({ tabs, activeStep = 0 }) {
     id: `scrollable-auto-tab-${index}`,
     "aria-controls": `scrollable-auto-panel-${index}`
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-    import_Box.default,
+  return /* @__PURE__ */ jsx2(
+    Box,
     {
       sx: {
         width: "100%",
         display: "flex",
         justifyContent: "center"
       },
-      children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-        import_Tabs.default,
+      children: /* @__PURE__ */ jsx2(
+        Tabs,
         {
           value: currentStep,
           variant: "scrollable",
@@ -455,8 +454,8 @@ function BasicTabs({ tabs, activeStep = 0 }) {
               backgroundColor: "#1976D2"
             }
           },
-          children: tabs.map((tab, index) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-            import_Tab.default,
+          children: tabs.map((tab, index) => /* @__PURE__ */ jsx2(
+            Tab,
             {
               label: tab.title.length > 20 ? tab.title.substring(0, 20) + "..." : tab.title,
               ...a11yProps(index),
@@ -476,20 +475,25 @@ function BasicTabs({ tabs, activeStep = 0 }) {
   );
 }
 BasicTabs.propTypes = {
-  tabs: import_prop_types.default.arrayOf(
-    import_prop_types.default.shape({
-      label: import_prop_types.default.string.isRequired,
+  tabs: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
       // Fixed prop name
-      content: import_prop_types.default.node.isRequired
+      content: PropTypes.node.isRequired
     })
   ).isRequired,
-  activeStep: import_prop_types.default.number.isRequired
+  activeStep: PropTypes.number.isRequired
 };
 
 // src/Form/Form.js
-var import_central_middleware = require("central-middleware");
-var import_jsx_runtime3 = require("react/jsx-runtime");
-var Form = (0, import_react2.forwardRef)(
+import {
+  getServerResponse,
+  showSuccessToast,
+  showErrorToast,
+  showWarningToast
+} from "central-middleware";
+import { Fragment, jsx as jsx3, jsxs } from "react/jsx-runtime";
+var Form = forwardRef(
   ({
     data,
     config,
@@ -510,19 +514,19 @@ var Form = (0, import_react2.forwardRef)(
     currentSteps
     // multiColumn = 1,
   }, ref) => {
-    const { main } = (0, import_react_redux.useSelector)((state) => state);
-    const dispatch = (0, import_react_redux.useDispatch)();
-    const [currentStep, setCurrentStep] = (0, import_react2.useState)(0);
-    const [openModal, setOpenModal] = (0, import_react2.useState)(isModalOpen);
+    const { main } = useSelector((state) => state);
+    const dispatch = useDispatch();
+    const [currentStep, setCurrentStep] = useState(0);
+    const [openModal, setOpenModal] = useState(isModalOpen);
     const { features: { submission } = {} } = data || {};
     const { viewMode: { presentation, mode } = {} } = config || {};
-    const [previousStep, setPreviousStep] = (0, import_react2.useState)(0);
-    const [successResponse, setSuccessResponse] = (0, import_react2.useState)(false);
-    const [submitError, setSubmitError] = (0, import_react2.useState)(null);
-    const [isSubmitting, setIsSubmitting] = (0, import_react2.useState)(false);
-    const [currentId, setCurrentId] = (0, import_react2.useState)("");
-    const boxRef = (0, import_react2.useRef)(null);
-    const [boxWidth, setBoxWidth] = (0, import_react2.useState)(0);
+    const [previousStep, setPreviousStep] = useState(0);
+    const [successResponse, setSuccessResponse] = useState(false);
+    const [submitError, setSubmitError] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [currentId, setCurrentId] = useState("");
+    const boxRef = useRef(null);
+    const [boxWidth, setBoxWidth] = useState(0);
     const {
       features: {
         submission: {
@@ -539,7 +543,7 @@ var Form = (0, import_react2.forwardRef)(
     const closeButton = submission?.steps?.find(
       (step) => Array.isArray(step.buttons) && step.buttons.some((btn) => btn.type === "close")
     );
-    const [localCopyFormKeys, setLocalCopyFormKeys] = (0, import_react2.useState)(formKeysPass);
+    const [localCopyFormKeys, setLocalCopyFormKeys] = useState(formKeysPass);
     const closeButtonOnClick = closeButton?.buttons.find(
       (btn) => btn.type === "close"
     )?.onClick;
@@ -570,7 +574,7 @@ var Form = (0, import_react2.forwardRef)(
       };
     });
     let isModal = presentation === "modalView" ? true : false;
-    (0, import_react2.useEffect)(() => {
+    useEffect2(() => {
       if (boxRef.current) {
         const Modalwidth = boxRef.current.offsetWidth;
         setBoxWidth(Modalwidth);
@@ -596,7 +600,7 @@ var Form = (0, import_react2.forwardRef)(
         });
       });
     }
-    (0, import_react2.useEffect)(() => {
+    useEffect2(() => {
       const updatedFields = stepsData?.map((step) => [
         step?.parameters?.fields
       ]);
@@ -623,7 +627,7 @@ var Form = (0, import_react2.forwardRef)(
       serverCommunication.onSuccess = updatedOnSuccess;
       serverCommunication.onFailure = updatedOnFailure;
       if (currentSteps) {
-        (0, import_central_middleware.getServerResponse)(
+        getServerResponse(
           serverCommunication,
           `&step=${currentSteps + 1}`,
           queryParamsId2
@@ -631,14 +635,14 @@ var Form = (0, import_react2.forwardRef)(
         console.log("currentSteps is in if", serverCommunication);
       } else {
         console.log("currentSteps is", currentSteps);
-        (0, import_central_middleware.getServerResponse)(
+        getServerResponse(
           serverCommunication,
           `&step=${currentStep + 1}`,
           queryParamsId2
         );
       }
     }
-    (0, import_react2.useEffect)(() => {
+    useEffect2(() => {
       if (config?.features?.fetchData?.operationalMode === "server" && config?.features?.fetchData?.enable && config?.viewMode?.mode !== "create") {
         const sagaCommunication = data?.features?.fetchData?.serverCommunication;
         if (sagaCommunication) {
@@ -656,14 +660,14 @@ var Form = (0, import_react2.forwardRef)(
         });
       }
     }, [localDataProp]);
-    const [formValues, setFormValues] = (0, import_react2.useState)(initialFormValues);
-    (0, import_react2.useEffect)(() => {
+    const [formValues, setFormValues] = useState(initialFormValues);
+    useEffect2(() => {
       console.log("formValuess which 1", formValues);
     }, [formValues]);
     const steps = submission?.steps?.map((step) => `${step.title}`);
-    const [errors, setErrors] = (0, import_react2.useState)({});
-    const [formKeys, setFormKeys] = (0, import_react2.useState)([]);
-    const [fields, setFields] = (0, import_react2.useState)([]);
+    const [errors, setErrors] = useState({});
+    const [formKeys, setFormKeys] = useState([]);
+    const [fields, setFields] = useState([]);
     const validateCurrentStep = (currentFields = fields[currentStep][0], newErrors = {}, valid = true) => {
       if (!isReadOnly) {
         console.log("currentFields", currentFields);
@@ -762,7 +766,7 @@ var Form = (0, import_react2.forwardRef)(
         console.log("i am in view");
       }
       if (!validateCurrentStep()) {
-        (0, import_central_middleware.showWarningToast)("Please fill all required fields.");
+        showWarningToast("Please fill all required fields.");
         return;
       }
       setIsSubmitting(true);
@@ -788,14 +792,14 @@ var Form = (0, import_react2.forwardRef)(
         let updatedOnSuccess = function(res) {
           if (typeof onSuccess === "function") {
             onSuccess(res);
-            (0, import_central_middleware.showSuccessToast)("Data submitted successfully!");
+            showSuccessToast("Data submitted successfully!");
           }
           SuccessResponseOfServer(res);
           setIsSubmitting(false);
           sagaCommunication.onSuccess = null;
         }, updatedOnFailure = function(err) {
           if (typeof onFailure === "function") {
-            (0, import_central_middleware.showErrorToast)(
+            showErrorToast(
               err?.payload || err?.message || "Error: Unable to submit data."
             );
             onFailure(err);
@@ -834,13 +838,13 @@ var Form = (0, import_react2.forwardRef)(
             formValues
           );
           if (currentSteps) {
-            (0, import_central_middleware.getServerResponse)(
+            getServerResponse(
               sagaCommunication,
               `&step=${currentSteps + 1}`,
               id
             );
           } else {
-            (0, import_central_middleware.getServerResponse)(
+            getServerResponse(
               sagaCommunication,
               currentStep > 0 ? `&step=${currentStep + 1}` : "",
               id
@@ -868,7 +872,7 @@ var Form = (0, import_react2.forwardRef)(
     const handleNextStep = async () => {
       if (mode !== "view") {
         if (!validateCurrentStep()) {
-          (0, import_central_middleware.showWarningToast)("Please fill all required fields.");
+          showWarningToast("Please fill all required fields.");
           return;
         }
       }
@@ -897,7 +901,7 @@ var Form = (0, import_react2.forwardRef)(
           }, updatedOnFailure = function(err) {
             console.error("[NextStep] Server Error:", err);
             if (typeof onFailure == "function") {
-              (0, import_central_middleware.showErrorToast)("Error32: ");
+              showErrorToast("Error32: ");
               onFailure(err);
             }
             ErrorResponseOfServer(err);
@@ -930,13 +934,13 @@ var Form = (0, import_react2.forwardRef)(
             let sectionTitle;
             let id = getSectionValue(stepsData, currentStep, formValues);
             if (currentSteps) {
-              (0, import_central_middleware.getServerResponse)(
+              getServerResponse(
                 sagaCommunication,
                 `&step=${currentSteps + 1}`,
                 id
               );
             } else {
-              (0, import_central_middleware.getServerResponse)(
+              getServerResponse(
                 sagaCommunication,
                 currentStep > 0 ? `&step=${currentStep + 1}` : "",
                 id
@@ -989,21 +993,21 @@ var Form = (0, import_react2.forwardRef)(
       setSuccessResponse(false);
       return response;
     };
-    const [allTagValues, setAllTagValues] = (0, import_react2.useState)({});
-    (0, import_react2.useEffect)(() => {
+    const [allTagValues, setAllTagValues] = useState({});
+    useEffect2(() => {
     }, [allTagValues]);
-    const theme = (0, import_material3.useTheme)();
-    const isSmallScreen = (0, import_material3.useMediaQuery)(theme.breakpoints.down("sm"));
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     console.log("theme2: ", theme.palette);
     const columnCount = isSmallScreen ? 1 : multiColumn || 1;
-    const form = /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("form", { noValidate: true, onSubmit: handleSubmit, ref, children: [
-      Array.isArray(fields) && Array.isArray(fields[currentStep]) && fields[currentStep].length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_material3.Grid, { container: true, spacing: 2, children: (() => {
+    const form = /* @__PURE__ */ jsxs("form", { noValidate: true, onSubmit: handleSubmit, ref, children: [
+      Array.isArray(fields) && Array.isArray(fields[currentStep]) && fields[currentStep].length > 0 ? /* @__PURE__ */ jsx3(Grid2, { container: true, spacing: 2, children: (() => {
         const stepFields = fields[currentStep].flat();
         const columns = Array.from({ length: columnCount }, () => []);
         stepFields.forEach((field, index) => {
           const isFullWidth = field?.type === "section" || field?.type === "listOfSections" || stepFields.length === 1;
           console.log("boxWidthboxWidth 0", boxWidth);
-          const fieldComponent = /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_material3.Grid, { item: true, xs: 12, children: renderFields({
+          const fieldComponent = /* @__PURE__ */ jsx3(Grid2, { item: true, xs: 12, children: renderFields({
             field,
             formValues,
             inputFields,
@@ -1038,14 +1042,14 @@ var Form = (0, import_react2.forwardRef)(
         if (stepFields.length === 1) {
           return columns[0];
         } else {
-          return columns.map((col, colIdx) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_material3.Grid, { item: true, xs: 12 / columnCount, children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_material3.Grid, { container: true, spacing: 2, direction: "column", children: col }) }, `column-${colIdx}`));
+          return columns.map((col, colIdx) => /* @__PURE__ */ jsx3(Grid2, { item: true, xs: 12 / columnCount, children: /* @__PURE__ */ jsx3(Grid2, { container: true, spacing: 2, direction: "column", children: col }) }, `column-${colIdx}`));
         }
       })() }) : null,
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_material3.Grid, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_material3.Box, { display: "flex", justifyContent: "space-between", marginTop: 2, children: [
-          Array.isArray(steps) && steps.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_jsx_runtime3.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-              import_material3.Button,
+      /* @__PURE__ */ jsxs(Grid2, { children: [
+        /* @__PURE__ */ jsxs(Box2, { display: "flex", justifyContent: "space-between", marginTop: 2, children: [
+          Array.isArray(steps) && steps.length > 1 && /* @__PURE__ */ jsxs(Fragment, { children: [
+            /* @__PURE__ */ jsx3(
+              Button,
               {
                 variant: "outlined",
                 onClick: handlePrevStep,
@@ -1053,8 +1057,8 @@ var Form = (0, import_react2.forwardRef)(
                 children: "Previous"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-              import_material3.Button,
+            /* @__PURE__ */ jsx3(
+              Button,
               {
                 variant: "outlined",
                 onClick: () => {
@@ -1067,8 +1071,8 @@ var Form = (0, import_react2.forwardRef)(
                 children: "Skip"
               }
             ),
-            currentStep < (fields?.length || 0) - 1 && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-              import_material3.Button,
+            currentStep < (fields?.length || 0) - 1 && /* @__PURE__ */ jsx3(
+              Button,
               {
                 variant: "contained",
                 onClick: previousStep === 0 ? handleNextStep : () => {
@@ -1076,26 +1080,26 @@ var Form = (0, import_react2.forwardRef)(
                   setCurrentStep(previousStep);
                 },
                 disabled: currentStep >= (fields?.length || 0) - 1 || isSubmitting,
-                children: isSubmitting ? /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_material4.CircularProgress, { size: 20, color: "inherit" }) : mode === "view" ? "Next" : !queryParamsId ? "Next" : "Update"
+                children: isSubmitting ? /* @__PURE__ */ jsx3(CircularProgress, { size: 20, color: "inherit" }) : mode === "view" ? "Next" : !queryParamsId ? "Next" : "Update"
               }
             )
           ] }),
           mode !== "view" && submission?.steps?.[currentStep]?.buttons?.map(
-            (btn, index) => btn.type === "submit" ? /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-              import_material3.Button,
+            (btn, index) => btn.type === "submit" ? /* @__PURE__ */ jsx3(
+              Button,
               {
                 variant: "contained",
                 type: "submit",
                 disabled: isSubmitting,
                 sx: { width: steps?.length === 1 ? "100%" : "auto" },
-                children: isSubmitting ? /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_material4.CircularProgress, { size: 20, color: "inherit" }) : queryParamsId ? "Update" : btn?.label
+                children: isSubmitting ? /* @__PURE__ */ jsx3(CircularProgress, { size: 20, color: "inherit" }) : queryParamsId ? "Update" : btn?.label
               },
               index
             ) : null
           )
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
-          import_material3.Box,
+        /* @__PURE__ */ jsxs(
+          Box2,
           {
             display: "flex",
             flexDirection: "row",
@@ -1104,8 +1108,8 @@ var Form = (0, import_react2.forwardRef)(
             sx: { justifyContent: "space-between" },
             children: [
               submission?.steps?.[currentStep]?.buttons?.map(
-                (btn, index) => btn.type !== "submit" && btn.type !== "close" ? /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-                  import_material3.Button,
+                (btn, index) => btn.type !== "submit" && btn.type !== "close" ? /* @__PURE__ */ jsx3(
+                  Button,
                   {
                     variant: "contained",
                     sx: {
@@ -1129,8 +1133,8 @@ var Form = (0, import_react2.forwardRef)(
               ),
               currentStep === submission?.steps?.length - 1 && !submission?.steps?.[currentStep]?.buttons?.some(
                 (btn) => btn.type === "submit"
-              ) && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-                import_material3.Button,
+              ) && /* @__PURE__ */ jsx3(
+                Button,
                 {
                   variant: "contained",
                   type: "submit",
@@ -1143,20 +1147,20 @@ var Form = (0, import_react2.forwardRef)(
         )
       ] })
     ] });
-    const renderStepperAndForm = () => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_jsx_runtime3.Fragment, { children: [
-      stepsData.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(BasicTabs, { tabs: stepsData, activeStep: currentStep }),
+    const renderStepperAndForm = () => /* @__PURE__ */ jsxs(Fragment, { children: [
+      stepsData.length > 1 && /* @__PURE__ */ jsx3(BasicTabs, { tabs: stepsData, activeStep: currentStep }),
       form
     ] });
     if (isModal === true) {
-      return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_jsx_runtime3.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
-        import_material3.Dialog,
+      return /* @__PURE__ */ jsx3(Fragment, { children: /* @__PURE__ */ jsxs(
+        Dialog,
         {
           open: closeButton ? true : openModal,
           onClose: isSubmitting ? void 0 : onlyClose,
           fullWidth: true,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-              import_material3.DialogTitle,
+            /* @__PURE__ */ jsx3(
+              DialogTitle,
               {
                 sx: {
                   display: "flex",
@@ -1165,18 +1169,18 @@ var Form = (0, import_react2.forwardRef)(
                   color: inputFields?.color,
                   backgroundColor: background?.color
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_material3.IconButton, { onClick: isSubmitting ? void 0 : onlyClose, children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_icons_material.Close, {}) })
+                children: /* @__PURE__ */ jsx3(IconButton, { onClick: isSubmitting ? void 0 : onlyClose, children: /* @__PURE__ */ jsx3(Close, {}) })
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-              import_material3.DialogContent,
+            /* @__PURE__ */ jsx3(
+              DialogContent,
               {
                 sx: {
                   marginTop: "-30px",
                   backgroundColor: background?.color
                 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-                  import_material3.Box,
+                children: /* @__PURE__ */ jsx3(
+                  Box2,
                   {
                     ref: boxRef,
                     sx: {
@@ -1194,8 +1198,8 @@ var Form = (0, import_react2.forwardRef)(
       ) });
     } else {
       return console.log(" ia m here in form ");
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-        import_material3.Card,
+      /* @__PURE__ */ jsx3(
+        Card2,
         {
           sx: {
             padding: "24px",
@@ -1213,8 +1217,7 @@ var Form = (0, import_react2.forwardRef)(
   }
 );
 var Form_default = Form;
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  Form
-});
-//# sourceMappingURL=index.js.map
+export {
+  Form_default as Form
+};
+//# sourceMappingURL=index.mjs.map

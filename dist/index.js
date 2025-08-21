@@ -21,9 +21,6 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-var __esm = (fn, res) => function __init() {
-  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
-};
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
@@ -49,148 +46,9 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/Common/Store/Actions/ActionTypes/ReduxActionTypes.js
-var REDUX_UPDATE_CURRENT_USER_ROLE, REDUX_LOGOUT_CURRENT_USER, REDUX_UPDATE_CURRENT_USER, REDUX_UPDATE_LOADING_STATE, REDUX_UPDATE_USER_DATA, REDUX_API_DOCUMENTATION;
-var init_ReduxActionTypes = __esm({
-  "src/Common/Store/Actions/ActionTypes/ReduxActionTypes.js"() {
-    REDUX_UPDATE_CURRENT_USER_ROLE = "REDUX_UPDATE_CURRENT_USER_ROLE";
-    REDUX_LOGOUT_CURRENT_USER = "REDUX_LOGOUT_CURRENT_USER";
-    REDUX_UPDATE_CURRENT_USER = "REDUX_UPDATE_CURRENT_USER";
-    REDUX_UPDATE_LOADING_STATE = "REDUX_UPDATE_LOADING_STATE";
-    REDUX_UPDATE_USER_DATA = "REDUX_UPDATE_USER_DATA";
-    REDUX_API_DOCUMENTATION = "REDUX_API_DOCUMENTATION";
-  }
-});
-
-// src/Common/Store/Reducers/mainReducer.js
-var initialState, mainReducer, mainReducer_default;
-var init_mainReducer = __esm({
-  "src/Common/Store/Reducers/mainReducer.js"() {
-    init_ReduxActionTypes();
-    initialState = {
-      accesstoken: null,
-      currentUser: null,
-      currentUserDesignationsRoles: [],
-      currentUserPermissions: [],
-      userPermissions: [],
-      userDepartments: [],
-      userDesignation: [],
-      userDevices: [],
-      allUserPermissions: {},
-      userSelectedRole: {},
-      apiDocumentationData: [],
-      userRoles: [],
-      isLoading: false
-    };
-    mainReducer = (state = initialState, action) => {
-      var _a, _b, _c, _d;
-      switch (action == null ? void 0 : action.type) {
-        case REDUX_UPDATE_CURRENT_USER:
-          return __spreadProps(__spreadValues({}, state), {
-            currentUser: action.payload.otpVerif.user,
-            accesstoken: action.payload.otpVerif.access_token,
-            currentUserDesignationsRoles: action.payload.otpVerif.user_roles_designations_departments,
-            userSelectedRole: ((_b = (_a = action.payload.otpVerif) == null ? void 0 : _a.user_roles_designations_departments) == null ? void 0 : _b.length) > 0 ? action.payload.otpVerif.user_roles_designations_departments[0] : {},
-            userPermissions: action.payload.otpVerif.collective_user_permissions,
-            currentUserPermissions: ((_c = action.payload.otpVerif.user_roles_designations_departments) == null ? void 0 : _c.length) > 0 ? action.payload.otpVerif.user_permissions[action.payload.otpVerif.user_roles_designations_departments[0].user_role_designation_department_id] : [],
-            allUserPermissions: action.payload.otpVerif.user_permissions,
-            userDepartments: action.payload.otpVerif.user_departments,
-            userDesignation: action.payload.otpVerif.user_designations,
-            userRoles: action.payload.otpVerif.user_roles,
-            userDevices: action.payload.otpVerif.user_devices
-          });
-        case REDUX_UPDATE_USER_DATA:
-          const updatedUser = __spreadValues(__spreadValues({}, state.currentUser), action.requestParams);
-          return __spreadProps(__spreadValues({}, state), {
-            // Retain the rest of the state
-            currentUser: updatedUser
-            // Update the currentUser object
-          });
-        case REDUX_LOGOUT_CURRENT_USER:
-          return initialState;
-        case REDUX_UPDATE_CURRENT_USER_ROLE: {
-          return __spreadProps(__spreadValues({}, state), {
-            userSelectedRole: action.payload,
-            currentUserPermissions: state.allUserPermissions[(_d = action.payload) == null ? void 0 : _d.user_role_designation_department_id]
-          });
-        }
-        case REDUX_UPDATE_LOADING_STATE:
-          return __spreadProps(__spreadValues({}, state), {
-            isLoading: action.payload
-          });
-        case REDUX_API_DOCUMENTATION:
-          return __spreadProps(__spreadValues({}, state), {
-            isLoading: false,
-            apiDocumentationData: action.payload.payload
-          });
-        default:
-          return state;
-      }
-    };
-    mainReducer_default = mainReducer;
-  }
-});
-
-// src/Common/Store/Reducers/index.js
-var import_redux, rootReducer, Reducers_default;
-var init_Reducers = __esm({
-  "src/Common/Store/Reducers/index.js"() {
-    import_redux = require("redux");
-    init_mainReducer();
-    rootReducer = (0, import_redux.combineReducers)({
-      main: mainReducer_default
-    });
-    Reducers_default = rootReducer;
-  }
-});
-
-// src/Common/Store/Actions/ActionTypes/ApiActionTypes.js
-var GET_OTP, VERIFY_OTP, UPDATE_CURRENT_USER_ROLE, UPDATE_LOADING_STATE, LOGOUT_CURRENT_USER, GET_ALL_USERS, GET_ALL_ROLES, DELETE_USER, ADD_USER, DELETE_ROLE, ADD_ROLE, GET_GROUPS, GET_ALL_PERMISSIONS, GET_ALL_PERMISSIONS_GROUPS, UPDATE_USER_DATA, GET_ALL_USER_ROLE_PERMISSIONS_GROUPS, GET_ADMIN_DASHBOARD_DATA, GET_USER_DEVICES, ADD_PERMISSION, PERMISSION_UPDATE, GET_PERMISSION_BY_ID, ADMIN_USER_VIEW, ADMIN_DESIGNATION_VIEW, ADMIN_DEPARTMENTS_VIEW, UPDATE_PERMISSION_BY_ID, ADMIN_ROLES_DESIGNATION_DEPARTMENT_VIEW, ADMIN_USER_ROLE_DESIGNATION_DEPARTMENT_VIEW, ADMIN_PERMISSION_GROUPS_VIEW, ADMIN_PERMISSION_GROUPS_PERMISSIONS_VIEW, ADMIN_USER_ROLE_DESIGNATION_PERMISSIONS_VIEW, GET_INDIVIDUAL_LEADERBOARD_DATA, GET_GROUP_LEADERBOARD_DATA, GET_USER_DEVICES_OTP, ADD_DEVICE, ADD_DEVICE_OTP, FETCH_CLASS_ACTIVITIES, API_DOCUMENTATION;
-var init_ApiActionTypes = __esm({
-  "src/Common/Store/Actions/ActionTypes/ApiActionTypes.js"() {
-    GET_OTP = "GET_OTP";
-    VERIFY_OTP = "VERIFY_OTP";
-    UPDATE_CURRENT_USER_ROLE = "UPDATE_CURRENT_USER_ROLE";
-    UPDATE_LOADING_STATE = "UPDATE_LOADING_STATE";
-    LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
-    GET_ALL_USERS = "GET_ALL_USERS";
-    GET_ALL_ROLES = "GET_ALL_ROLES";
-    DELETE_USER = "DELETE_USER";
-    ADD_USER = "ADD_USER";
-    DELETE_ROLE = "DELETE_ROLE";
-    ADD_ROLE = "ADD_ROLE";
-    GET_GROUPS = "GET_GROUPS";
-    GET_ALL_PERMISSIONS = "GET_ALL_PERMISSIONS";
-    GET_ALL_PERMISSIONS_GROUPS = "GET_ALL_PERMISSIONS_GROUPS";
-    UPDATE_USER_DATA = "UPDATE_USER_DATA";
-    GET_ALL_USER_ROLE_PERMISSIONS_GROUPS = "GET_ALL_USER_ROLE_PERMISSIONS_GROUPS";
-    GET_ADMIN_DASHBOARD_DATA = "GET_ADMIN_DASHBOARD_DATA";
-    GET_USER_DEVICES = "GET_USER_DEVICES";
-    ADD_PERMISSION = "ADD_PERMISSION";
-    PERMISSION_UPDATE = "PERMISSION_UPDATE";
-    GET_PERMISSION_BY_ID = "GET_PERMISSION_BY_ID";
-    ADMIN_USER_VIEW = "admin_user_view";
-    ADMIN_DESIGNATION_VIEW = "admin_designation_view";
-    ADMIN_DEPARTMENTS_VIEW = "admin_departments_view";
-    UPDATE_PERMISSION_BY_ID = "UPDATE_PERMISSION_BY_ID";
-    ADMIN_ROLES_DESIGNATION_DEPARTMENT_VIEW = "admin_rolesdesignationsdepartment_view";
-    ADMIN_USER_ROLE_DESIGNATION_DEPARTMENT_VIEW = "admin_urdd_view";
-    ADMIN_PERMISSION_GROUPS_VIEW = "admin_permission_groups_view";
-    ADMIN_PERMISSION_GROUPS_PERMISSIONS_VIEW = "admin_pgp_view";
-    ADMIN_USER_ROLE_DESIGNATION_PERMISSIONS_VIEW = "admin_user_role_designation_permissions_view";
-    GET_INDIVIDUAL_LEADERBOARD_DATA = "GET_INDIVIDUAL_LEADERBOARD_DATA";
-    GET_GROUP_LEADERBOARD_DATA = "GET_GROUP_LEADERBOARD_DATA";
-    GET_USER_DEVICES_OTP = "GET_USER_DEVICES_OTP";
-    ADD_DEVICE = "ADD_DEVICE";
-    ADD_DEVICE_OTP = "ADD_DEVICE_OTP";
-    FETCH_CLASS_ACTIVITIES = "FETCH_CLASS_ACTIVITIES";
-    API_DOCUMENTATION = "API_DOCUMENTATION";
-  }
-});
-
 // src/Common/Store/Sagas/encryption.js
 var require_encryption = __commonJS({
-  "src/Common/Store/Sagas/encryption.js"(exports2, module2) {
+  "src/Common/Store/Sagas/encryption.js"(exports, module2) {
     var CryptoJS = require("crypto-js");
     var adjustKeyLength = (key, targetLength = 32) => {
       if (key.length > targetLength) {
@@ -225,96 +83,238 @@ var require_encryption = __commonJS({
   }
 });
 
-// src/Common/Constants.js
-var constants, Constants_default;
-var init_Constants = __esm({
-  "src/Common/Constants.js"() {
-    constants = {
-      // base_url: 'http://10.0.0.68:3000/api',            //self
-      base_url: "http://localhost:3000/api",
-      //local
-      // base_url: 'http://10.0.0.14:3000/api',      //Aashir
-      // base_url: "http://10.0.1.20:3000/api",     //Noor
-      // base_url:"http://10.0.0.14:3000/api", //Hamad
-      step1: "&step=1",
-      step2: "&step=2",
-      version: "?version=1.0",
-      all: "/all",
-      list: "/list",
-      update: "/update",
-      add: "/add",
-      delete: "/delete",
-      dropDown: "/dropdown",
-      groups: "/groups",
-      errors: "/errors",
-      get: "/get",
-      email: "/email",
-      log: "/log",
-      api_documentation: "/documentation",
-      get_otp: "/login?version=1.0&step=1",
-      verify_otp: "/login?version=1.0&step=2",
-      users_role_info: "/users_role_info",
-      //login
-      login: "/login",
-      info: "/info",
-      crud: "/crud",
-      // Users
-      users: "/users",
-      groups: "/groups",
-      // Admin Dashboard
-      get_admin_dashboard_data: "/admin/dashboard",
-      // User Devices
-      user_devices: "devices",
-      // Attachments
-      attachments: "/attachments",
-      // Chatting Group Members
-      chatting_group_members: "/chatting_group_members",
-      // Chatting Groups
-      chatting_groups: "/chatting_groups",
-      // Departments
-      departments: "/departments",
-      // Designations
-      designations: "/designations",
-      // Messages
-      messages: "/messages",
-      // Notifications
-      notifications: "/notifications",
-      // Permission Groups
-      permission_groups: "/permission_groups",
-      // Permission Groups Permissions
-      permission_groups_permissions: "/permission_groups_permissions",
-      // Permissions
-      permissions: "/permissions",
-      // Platform Versions
-      platform_versions: "/platform_versions",
-      // Platforms
-      platforms: "/platforms",
-      // Roles
-      roles: "/roles",
-      // Roles Designations Department
-      roles_designations_department: "/roles_designations_department",
-      // Task Flow Steps
-      task_flow_steps: "/task_flow_steps",
-      // Task Flows
-      task_flows: "/task_flows",
-      // Task History
-      task_history: "/task_history",
-      // Tasks
-      tasks: "/tasks",
-      // Templates
-      templates: "/templates",
-      // User Device Notifications
-      user_device_notifications: "/user_device_notifications",
-      // User Devices
-      luser_devices: "/user_devices",
-      // User Role Designation Permissions
-      user_role_designation_permissions: "/user_role_designation_permissions",
-      // User Roles Designations Department
-      user_roles_designations_department: "/user_roles_designations_department"
-    };
-    Constants_default = constants;
-  }
+// index.js
+var central_middleware_exports = {};
+__export(central_middleware_exports, {
+  constants: () => Constants_default,
+  getServerResponse: () => getServerResponse,
+  serverCommunicationHelper: () => serverCommunicationHelper,
+  showErrorToast: () => showErrorToast,
+  showInfoToast: () => showInfoToast,
+  showSuccessToast: () => showSuccessToast
 });
+module.exports = __toCommonJS(central_middleware_exports);
+
+// src/Common/Store/configureStore.js
+var import_redux2 = require("redux");
+var import_redux_persist = require("redux-persist");
+var import_storage = __toESM(require("redux-persist/lib/storage/index"));
+var import_redux_saga = __toESM(require("redux-saga"));
+
+// src/Common/Store/Reducers/index.js
+var import_redux = require("redux");
+
+// src/Common/Store/Actions/ActionTypes/ReduxActionTypes.js
+var REDUX_UPDATE_CURRENT_USER_ROLE = "REDUX_UPDATE_CURRENT_USER_ROLE";
+var REDUX_LOGOUT_CURRENT_USER = "REDUX_LOGOUT_CURRENT_USER";
+var REDUX_UPDATE_CURRENT_USER = "REDUX_UPDATE_CURRENT_USER";
+var REDUX_UPDATE_LOADING_STATE = "REDUX_UPDATE_LOADING_STATE";
+var REDUX_UPDATE_USER_DATA = "REDUX_UPDATE_USER_DATA";
+var REDUX_API_DOCUMENTATION = "REDUX_API_DOCUMENTATION";
+
+// src/Common/Store/Reducers/mainReducer.js
+var initialState = {
+  accesstoken: null,
+  currentUser: null,
+  currentUserDesignationsRoles: [],
+  currentUserPermissions: [],
+  userPermissions: [],
+  userDepartments: [],
+  userDesignation: [],
+  userDevices: [],
+  allUserPermissions: {},
+  userSelectedRole: {},
+  apiDocumentationData: [],
+  userRoles: [],
+  isLoading: false
+};
+var mainReducer = (state = initialState, action) => {
+  var _a, _b, _c, _d;
+  switch (action == null ? void 0 : action.type) {
+    case REDUX_UPDATE_CURRENT_USER:
+      return __spreadProps(__spreadValues({}, state), {
+        currentUser: action.payload.otpVerif.user,
+        accesstoken: action.payload.otpVerif.access_token,
+        currentUserDesignationsRoles: action.payload.otpVerif.user_roles_designations_departments,
+        userSelectedRole: ((_b = (_a = action.payload.otpVerif) == null ? void 0 : _a.user_roles_designations_departments) == null ? void 0 : _b.length) > 0 ? action.payload.otpVerif.user_roles_designations_departments[0] : {},
+        userPermissions: action.payload.otpVerif.collective_user_permissions,
+        currentUserPermissions: ((_c = action.payload.otpVerif.user_roles_designations_departments) == null ? void 0 : _c.length) > 0 ? action.payload.otpVerif.user_permissions[action.payload.otpVerif.user_roles_designations_departments[0].user_role_designation_department_id] : [],
+        allUserPermissions: action.payload.otpVerif.user_permissions,
+        userDepartments: action.payload.otpVerif.user_departments,
+        userDesignation: action.payload.otpVerif.user_designations,
+        userRoles: action.payload.otpVerif.user_roles,
+        userDevices: action.payload.otpVerif.user_devices
+      });
+    case REDUX_UPDATE_USER_DATA:
+      const updatedUser = __spreadValues(__spreadValues({}, state.currentUser), action.requestParams);
+      return __spreadProps(__spreadValues({}, state), {
+        // Retain the rest of the state
+        currentUser: updatedUser
+        // Update the currentUser object
+      });
+    case REDUX_LOGOUT_CURRENT_USER:
+      return initialState;
+    case REDUX_UPDATE_CURRENT_USER_ROLE: {
+      return __spreadProps(__spreadValues({}, state), {
+        userSelectedRole: action.payload,
+        currentUserPermissions: state.allUserPermissions[(_d = action.payload) == null ? void 0 : _d.user_role_designation_department_id]
+      });
+    }
+    case REDUX_UPDATE_LOADING_STATE:
+      return __spreadProps(__spreadValues({}, state), {
+        isLoading: action.payload
+      });
+    case REDUX_API_DOCUMENTATION:
+      return __spreadProps(__spreadValues({}, state), {
+        isLoading: false,
+        apiDocumentationData: action.payload.payload
+      });
+    default:
+      return state;
+  }
+};
+var mainReducer_default = mainReducer;
+
+// src/Common/Store/Reducers/index.js
+var rootReducer = (0, import_redux.combineReducers)({
+  main: mainReducer_default
+});
+var Reducers_default = rootReducer;
+
+// src/Common/Store/Sagas/rootSaga.js
+var import_effects4 = require("redux-saga/effects");
+
+// src/Common/Store/Actions/ActionTypes/ApiActionTypes.js
+var GET_OTP = "GET_OTP";
+var VERIFY_OTP = "VERIFY_OTP";
+var UPDATE_CURRENT_USER_ROLE = "UPDATE_CURRENT_USER_ROLE";
+var UPDATE_LOADING_STATE = "UPDATE_LOADING_STATE";
+var LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
+var GET_ALL_USERS = "GET_ALL_USERS";
+var GET_ALL_ROLES = "GET_ALL_ROLES";
+var DELETE_USER = "DELETE_USER";
+var ADD_USER = "ADD_USER";
+var DELETE_ROLE = "DELETE_ROLE";
+var ADD_ROLE = "ADD_ROLE";
+var GET_GROUPS = "GET_GROUPS";
+var GET_ALL_PERMISSIONS = "GET_ALL_PERMISSIONS";
+var GET_ALL_PERMISSIONS_GROUPS = "GET_ALL_PERMISSIONS_GROUPS";
+var UPDATE_USER_DATA = "UPDATE_USER_DATA";
+var GET_ALL_USER_ROLE_PERMISSIONS_GROUPS = "GET_ALL_USER_ROLE_PERMISSIONS_GROUPS";
+var GET_ADMIN_DASHBOARD_DATA = "GET_ADMIN_DASHBOARD_DATA";
+var GET_USER_DEVICES = "GET_USER_DEVICES";
+var ADD_PERMISSION = "ADD_PERMISSION";
+var PERMISSION_UPDATE = "PERMISSION_UPDATE";
+var GET_PERMISSION_BY_ID = "GET_PERMISSION_BY_ID";
+var ADMIN_USER_VIEW = "admin_user_view";
+var ADMIN_DESIGNATION_VIEW = "admin_designation_view";
+var ADMIN_DEPARTMENTS_VIEW = "admin_departments_view";
+var UPDATE_PERMISSION_BY_ID = "UPDATE_PERMISSION_BY_ID";
+var ADMIN_ROLES_DESIGNATION_DEPARTMENT_VIEW = "admin_rolesdesignationsdepartment_view";
+var ADMIN_USER_ROLE_DESIGNATION_DEPARTMENT_VIEW = "admin_urdd_view";
+var ADMIN_PERMISSION_GROUPS_VIEW = "admin_permission_groups_view";
+var ADMIN_PERMISSION_GROUPS_PERMISSIONS_VIEW = "admin_pgp_view";
+var ADMIN_USER_ROLE_DESIGNATION_PERMISSIONS_VIEW = "admin_user_role_designation_permissions_view";
+var GET_INDIVIDUAL_LEADERBOARD_DATA = "GET_INDIVIDUAL_LEADERBOARD_DATA";
+var GET_GROUP_LEADERBOARD_DATA = "GET_GROUP_LEADERBOARD_DATA";
+var GET_USER_DEVICES_OTP = "GET_USER_DEVICES_OTP";
+var ADD_DEVICE = "ADD_DEVICE";
+var ADD_DEVICE_OTP = "ADD_DEVICE_OTP";
+var FETCH_CLASS_ACTIVITIES = "FETCH_CLASS_ACTIVITIES";
+var API_DOCUMENTATION = "API_DOCUMENTATION";
+
+// src/Common/Store/Sagas/general/generalSagas.js
+var import_effects3 = require("redux-saga/effects");
+
+// src/Common/Store/Sagas/SagaHelper.js
+var import_effects = require("redux-saga/effects");
+var import_encryption = __toESM(require_encryption());
+
+// src/Common/Constants.js
+var constants = {
+  base_url: process.env.REACT_APP_CENTRAL_MIDDLEWARE_BASE_URL,
+  //default
+  // base_url: 'http://10.0.0.68:3000/api',            //self
+  // base_url: "http://localhost:3000/api", //local
+  // base_url: 'http://10.0.0.14:3000/api',      //Aashir
+  // base_url: "http://10.0.1.20:3000/api",     //Noor
+  // base_url:"http://10.0.0.14:3000/api", //Hamad
+  step1: "&step=1",
+  step2: "&step=2",
+  version: "?version=1.0",
+  all: "/all",
+  list: "/list",
+  update: "/update",
+  add: "/add",
+  delete: "/delete",
+  dropDown: "/dropdown",
+  groups: "/groups",
+  errors: "/errors",
+  get: "/get",
+  email: "/email",
+  log: "/log",
+  api_documentation: "/documentation",
+  get_otp: "/login?version=1.0&step=1",
+  verify_otp: "/login?version=1.0&step=2",
+  users_role_info: "/users_role_info",
+  //login
+  login: "/login",
+  info: "/info",
+  crud: "/crud",
+  // Users
+  users: "/users",
+  // Admin Dashboard
+  get_admin_dashboard_data: "/admin/dashboard",
+  // User Devices
+  user_devices: "devices",
+  // Attachments
+  attachments: "/attachments",
+  // Chatting Group Members
+  chatting_group_members: "/chatting_group_members",
+  // Chatting Groups
+  chatting_groups: "/chatting_groups",
+  // Departments
+  departments: "/departments",
+  // Designations
+  designations: "/designations",
+  // Messages
+  messages: "/messages",
+  // Notifications
+  notifications: "/notifications",
+  // Permission Groups
+  permission_groups: "/permission_groups",
+  // Permission Groups Permissions
+  permission_groups_permissions: "/permission_groups_permissions",
+  // Permissions
+  permissions: "/permissions",
+  // Platform Versions
+  platform_versions: "/platform_versions",
+  // Platforms
+  platforms: "/platforms",
+  // Roles
+  roles: "/roles",
+  // Roles Designations Department
+  roles_designations_department: "/roles_designations_department",
+  // Task Flow Steps
+  task_flow_steps: "/task_flow_steps",
+  // Task Flows
+  task_flows: "/task_flows",
+  // Task History
+  task_history: "/task_history",
+  // Tasks
+  tasks: "/tasks",
+  // Templates
+  templates: "/templates",
+  // User Device Notifications
+  user_device_notifications: "/user_device_notifications",
+  // User Devices
+  luser_devices: "/user_devices",
+  // User Role Designation Permissions
+  user_role_designation_permissions: "/user_role_designation_permissions",
+  // User Roles Designations Department
+  user_roles_designations_department: "/user_roles_designations_department"
+};
+var Constants_default = constants;
 
 // src/Common/Store/Sagas/SagaHelper.js
 function* fetchData(action, queryParameter, queryParameterId) {
@@ -533,59 +533,46 @@ function* fetchData(action, queryParameter, queryParameterId) {
     }
   }
 }
-var import_effects, import_encryption, getFrameworkErrorMessage, SagaHelper_default;
-var init_SagaHelper = __esm({
-  "src/Common/Store/Sagas/SagaHelper.js"() {
-    import_effects = require("redux-saga/effects");
-    import_encryption = __toESM(require_encryption());
-    init_Constants();
-    getFrameworkErrorMessage = (statusCode, frameworkStatusCode) => {
-      const errorMessages = {
-        // Parameter Errors
-        E10: "Parameter name does not exist.",
-        E11: "Parameter validation failure.",
-        E12: "Parameter missing in source.",
-        E13: "Required parameter missing.",
-        E14: "No request body found.",
-        // API Info Errors
-        E20: "Invalid or missing query nature.",
-        E21: "Invalid or missing query payload.",
-        E22: "Callback function error.",
-        E23: "Callback function missing.",
-        E24: "Payload function error.",
-        E25: "Payload function missing.",
-        // Request Metadata Errors
-        E30: "Invalid or missing request method.",
-        E31: "Invalid or missing permission.",
-        E32: "Invalid page size value.",
-        // Middleware Errors
-        E40: "Invalid or expired token.",
-        E41: "Permission validation failure.",
-        E42: "OTP verification failure.",
-        E43: "Object resolver failure.",
-        E44: "Database connection failed.",
-        // API Errors
-        E50: "API version does not exist.",
-        E51: "API object does not exist.",
-        E52: "Mismatch request method."
-      };
-      return errorMessages[frameworkStatusCode] || `Unexpected error (Code: ${frameworkStatusCode})`;
-    };
-    SagaHelper_default = fetchData;
-  }
-});
+var getFrameworkErrorMessage = (statusCode, frameworkStatusCode) => {
+  const errorMessages = {
+    // Parameter Errors
+    E10: "Parameter name does not exist.",
+    E11: "Parameter validation failure.",
+    E12: "Parameter missing in source.",
+    E13: "Required parameter missing.",
+    E14: "No request body found.",
+    // API Info Errors
+    E20: "Invalid or missing query nature.",
+    E21: "Invalid or missing query payload.",
+    E22: "Callback function error.",
+    E23: "Callback function missing.",
+    E24: "Payload function error.",
+    E25: "Payload function missing.",
+    // Request Metadata Errors
+    E30: "Invalid or missing request method.",
+    E31: "Invalid or missing permission.",
+    E32: "Invalid page size value.",
+    // Middleware Errors
+    E40: "Invalid or expired token.",
+    E41: "Permission validation failure.",
+    E42: "OTP verification failure.",
+    E43: "Object resolver failure.",
+    E44: "Database connection failed.",
+    // API Errors
+    E50: "API version does not exist.",
+    E51: "API object does not exist.",
+    E52: "Mismatch request method."
+  };
+  return errorMessages[frameworkStatusCode] || `Unexpected error (Code: ${frameworkStatusCode})`;
+};
+var SagaHelper_default = fetchData;
 
 // src/Common/Store/Sagas/ReduxOnlySagaHelper.js
+var import_effects2 = require("redux-saga/effects");
 function* fetchData2(action) {
   yield (0, import_effects2.put)({ type: action.payload.reduxActionType, payload: action.payload.data });
 }
-var import_effects2, ReduxOnlySagaHelper_default;
-var init_ReduxOnlySagaHelper = __esm({
-  "src/Common/Store/Sagas/ReduxOnlySagaHelper.js"() {
-    import_effects2 = require("redux-saga/effects");
-    ReduxOnlySagaHelper_default = fetchData2;
-  }
-});
+var ReduxOnlySagaHelper_default = fetchData2;
 
 // src/Common/Store/Sagas/general/generalSagas.js
 function* dataSaga() {
@@ -631,16 +618,7 @@ function* dataSaga() {
   yield (0, import_effects3.takeEvery)(ADD_DEVICE_OTP, SagaHelper_default);
   yield (0, import_effects3.takeEvery)(FETCH_CLASS_ACTIVITIES, SagaHelper_default);
 }
-var import_effects3, generalSagas_default;
-var init_generalSagas = __esm({
-  "src/Common/Store/Sagas/general/generalSagas.js"() {
-    init_ApiActionTypes();
-    import_effects3 = require("redux-saga/effects");
-    init_SagaHelper();
-    init_ReduxOnlySagaHelper();
-    generalSagas_default = dataSaga;
-  }
-});
+var generalSagas_default = dataSaga;
 
 // src/Common/Store/Sagas/rootSaga.js
 function* rootSaga() {
@@ -648,86 +626,53 @@ function* rootSaga() {
     generalSagas_default()
   ]);
 }
-var import_effects4, rootSaga_default;
-var init_rootSaga = __esm({
-  "src/Common/Store/Sagas/rootSaga.js"() {
-    import_effects4 = require("redux-saga/effects");
-    init_generalSagas();
-    rootSaga_default = rootSaga;
-  }
-});
+var rootSaga_default = rootSaga;
 
 // src/Common/Store/configureStore.js
-var import_redux2, import_redux_persist, import_storage, import_redux_saga, persistConfig, persistedReducer, sagaMiddleware, composeEnhancers, store, persistor;
-var init_configureStore = __esm({
-  "src/Common/Store/configureStore.js"() {
-    import_redux2 = require("redux");
-    import_redux_persist = require("redux-persist");
-    import_storage = __toESM(require("redux-persist/lib/storage/index"));
-    import_redux_saga = __toESM(require("redux-saga"));
-    init_Reducers();
-    init_rootSaga();
-    persistConfig = {
-      key: "root",
-      storage: import_storage.default
-    };
-    persistedReducer = (0, import_redux_persist.persistReducer)(persistConfig, Reducers_default);
-    sagaMiddleware = (0, import_redux_saga.default)();
-    composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || import_redux2.compose;
-    store = (0, import_redux2.createStore)(
-      persistedReducer,
-      composeEnhancers((0, import_redux2.applyMiddleware)(sagaMiddleware))
-    );
-    sagaMiddleware.run(rootSaga_default);
-    persistor = (0, import_redux_persist.persistStore)(store);
-  }
-});
+var persistConfig = {
+  key: "root",
+  storage: import_storage.default
+};
+var persistedReducer = (0, import_redux_persist.persistReducer)(persistConfig, Reducers_default);
+var sagaMiddleware = (0, import_redux_saga.default)();
+var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || import_redux2.compose;
+var store = (0, import_redux2.createStore)(
+  persistedReducer,
+  composeEnhancers((0, import_redux2.applyMiddleware)(sagaMiddleware))
+);
+sagaMiddleware.run(rootSaga_default);
+var persistor = (0, import_redux_persist.persistStore)(store);
 
 // src/Common/getServerResponse.js
-var getServerResponse_exports = {};
-__export(getServerResponse_exports, {
-  getServerResponse: () => getServerResponse
-});
-var import_redux_saga2, getServerResponse;
-var init_getServerResponse = __esm({
-  "src/Common/getServerResponse.js"() {
-    init_configureStore();
-    import_redux_saga2 = require("redux-saga");
-    init_SagaHelper();
-    getServerResponse = async (serverCommunication, queryParam = null, qparam = null, setIsLoading = null) => {
-      if (!(serverCommunication == null ? void 0 : serverCommunication.apiUrl)) {
-        console.error("Error", "No API URL provided");
-        return;
-      }
-      try {
-        const response = await (0, import_redux_saga2.runSaga)(
-          {
-            dispatch: () => {
-            },
-            // We don't need to dispatch
-            getState: () => store.getState()
-            // Provide access to Redux state
-          },
-          SagaHelper_default,
-          serverCommunication,
-          queryParam,
-          qparam
-        ).toPromise();
-        return response;
-      } catch (error) {
-        console.error("Error in Server Response:", error);
-      } finally {
-        setIsLoading && setIsLoading(false);
-      }
-    };
+var import_redux_saga2 = require("redux-saga");
+var getServerResponse = async (serverCommunication, queryParam = null, qparam = null, setIsLoading = null) => {
+  if (!(serverCommunication == null ? void 0 : serverCommunication.apiUrl)) {
+    console.error("Error", "No API URL provided");
+    return;
   }
-});
+  try {
+    const response = await (0, import_redux_saga2.runSaga)(
+      {
+        dispatch: () => {
+        },
+        // We don't need to dispatch
+        getState: () => store.getState()
+        // Provide access to Redux state
+      },
+      SagaHelper_default,
+      serverCommunication,
+      queryParam,
+      qparam
+    ).toPromise();
+    return response;
+  } catch (error) {
+    console.error("Error in Server Response:", error);
+  } finally {
+    setIsLoading && setIsLoading(false);
+  }
+};
 
 // src/Common/serverCommunicationHelper.js
-var serverCommunicationHelper_exports = {};
-__export(serverCommunicationHelper_exports, {
-  default: () => serverCommunicationHelper
-});
 function serverCommunicationHelper({
   apiActionType = "",
   permission = false,
@@ -759,74 +704,33 @@ function serverCommunicationHelper({
     onFailure
   };
 }
-var init_serverCommunicationHelper = __esm({
-  "src/Common/serverCommunicationHelper.js"() {
-  }
-});
 
 // src/Common/ToastUtils.js
-var ToastUtils_exports = {};
-__export(ToastUtils_exports, {
-  showErrorToast: () => showErrorToast,
-  showInfoToast: () => showInfoToast,
-  showSuccessToast: () => showSuccessToast,
-  showToast: () => showToast,
-  showWarningToast: () => showWarningToast
-});
-var import_react_toastify, import_ReactToastify, toastConfig, showSuccessToast, showErrorToast, showInfoToast, showWarningToast, showToast;
-var init_ToastUtils = __esm({
-  "src/Common/ToastUtils.js"() {
-    import_react_toastify = require("react-toastify");
-    import_ReactToastify = require("react-toastify/dist/ReactToastify.css");
-    toastConfig = {
-      position: "top-right",
-      autoClose: 3e3,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true
-    };
-    showSuccessToast = (message) => {
-      import_react_toastify.toast.success(message, toastConfig);
-    };
-    showErrorToast = (message) => {
-      import_react_toastify.toast.error(message, toastConfig);
-    };
-    showInfoToast = (message) => {
-      import_react_toastify.toast.info(message, toastConfig);
-    };
-    showWarningToast = (message) => {
-      import_react_toastify.toast.warning(message, toastConfig);
-    };
-    showToast = (message, type = "default") => {
-      switch (type == null ? void 0 : type.toLowerCase()) {
-        case "success":
-          showSuccessToast(message);
-          break;
-        case "error":
-          showErrorToast(message);
-          break;
-        case "info":
-          showInfoToast(message);
-          break;
-        case "warning":
-          showWarningToast(message);
-          break;
-        default:
-          (0, import_react_toastify.toast)(message, toastConfig);
-      }
-    };
-  }
-});
-
-// index.js
-var { getServerResponse: getServerResponse2 } = (init_getServerResponse(), __toCommonJS(getServerResponse_exports));
-var serverCommunicationHelper2 = (init_serverCommunicationHelper(), __toCommonJS(serverCommunicationHelper_exports));
-var { showSuccessToast: showSuccessToast2, showErrorToast: showErrorToast2, showInfoToast: showInfoToast2 } = (init_ToastUtils(), __toCommonJS(ToastUtils_exports));
-module.exports = {
-  getServerResponse: getServerResponse2,
-  serverCommunicationHelper: serverCommunicationHelper2,
-  showSuccessToast: showSuccessToast2,
-  showErrorToast: showErrorToast2,
-  showInfoToast: showInfoToast2
+var import_react_toastify = require("react-toastify");
+var import_ReactToastify = require("react-toastify/dist/ReactToastify.css");
+var toastConfig = {
+  position: "top-right",
+  autoClose: 3e3,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true
 };
+var showSuccessToast = (message) => {
+  import_react_toastify.toast.success(message, toastConfig);
+};
+var showErrorToast = (message) => {
+  import_react_toastify.toast.error(message, toastConfig);
+};
+var showInfoToast = (message) => {
+  import_react_toastify.toast.info(message, toastConfig);
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  constants,
+  getServerResponse,
+  serverCommunicationHelper,
+  showErrorToast,
+  showInfoToast,
+  showSuccessToast
+});

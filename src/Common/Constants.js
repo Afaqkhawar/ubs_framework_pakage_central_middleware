@@ -1,6 +1,7 @@
 const constants = {
+  base_url:process.env.REACT_APP_CENTRAL_MIDDLEWARE_BASE_URL, //default
   // base_url: 'http://10.0.0.68:3000/api',            //self
-  base_url: "http://localhost:3000/api", //local
+  // base_url: "http://localhost:3000/api", //local
   // base_url: 'http://10.0.0.14:3000/api',      //Aashir
   // base_url: "http://10.0.1.20:3000/api",     //Noor
   // base_url:"http://10.0.0.14:3000/api", //Hamad
@@ -31,8 +32,6 @@ const constants = {
 
   // Users
   users: "/users",
-  groups: "/groups",
-
   // Admin Dashboard
   get_admin_dashboard_data: "/admin/dashboard",
 
